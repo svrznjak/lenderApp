@@ -1,0 +1,48 @@
+@font-face {
+  font-family: 'BasierCircle';
+  font-style: normal;
+  font-weight: 400;
+  src: url(@/assets/fonts/BasierCircle-Regular.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'BasierCircle';
+  font-style: italic;
+  font-weight: 400;
+  src: url(@/assets/fonts/BasierCircle-RegularItalic.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'BasierCircle';
+  font-style: normal;
+  font-weight: 500;
+  src: url(@/assets/fonts/BasierCircle-Medium.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'BasierCircle';
+  font-style: italic;
+  font-weight: 500;
+  src: url(@/assets/fonts/BasierCircle-MediumItalic.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'BasierCircle';
+  font-style: normal;
+  font-weight: 600;
+  src: url(@/assets/fonts/BasierCircle-SemiBold.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'BasierCircle';
+  font-style: italic;
+  font-weight: 600;
+  src: url(@/assets/fonts/BasierCircle-SemiBoldItalic.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'BasierCircle';
+  font-style: normal;
+  font-weight: 700;
+  src: url(@/assets/fonts/BasierCircle-Bold.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'BasierCircle';
+  font-style: italic;
+  font-weight: 700;
+  src: url(@/assets/fonts/BasierCircle-BoldItalic.ttf) format('truetype');
+}

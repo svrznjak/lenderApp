@@ -1,0 +1,99 @@
+@import "./styles/reset.css";
+@import "./styles/colors.css";
+@import "./styles/fonts.css";
+
+
+:root {
+  font-family: BasierCircle;
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 400;
+
+  color: var(--textColor);
+  background-color: var(--backgroundColor);
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-text-size-adjust: 100%;
+
+
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+     -khtml-user-select: none; /* Konqueror HTML */
+       -moz-user-select: none; /* Old versions of Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome, Edge, Opera and Firefox */
+
+}
+
+h1 {
+  font-size: 25px;
+  font-weight: 600;
+}
+
+h2 {
+  font-size: 23px;
+  font-weight: 600;
+}
+h3 {
+  font-size: 19px;
+  font-weight: 400;
+}
+h4 {
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--softtextColor);
+}
+p, label{
+  font-size: 15px;
+  font-weight: 400;
+}
+
+label{
+  margin-left: 3px;
+}
+
+input,select,textarea{
+  font-family: BasierCircle;
+  font-size: 15px;
+  font-weight: 400;
+  text-align: left;
+  color: var(--textColor);
+  background-color: #fff;
+  padding: 15px;
+  border: 2px solid var(--borderColor);
+  border-radius: 5px;
+  width: calc(100% - 34px);
+  margin-top: 5px;
+  transition:all 0.2s;
+  -webkit-tap-highlight-color: rgba(0,0,0,0);
+  &:focus{
+    border-color:var(--primaryColor);
+  }
+}
+input[type="date"]::-webkit-inner-spin-button,
+input[type="date"]::-webkit-calendar-picker-indicator {
+    opacity: 0;
+}
+input::-webkit-date-and-time-value {
+  text-align: left;
+}
+
+input[type="date"]{
+  background-image: url(@/assets/icons/calendar.svg);
+  background-repeat: no-repeat;
+  background-position: right 15px center;
+}
+
+select{
+  width: 100%;
+  -moz-appearance:none; /* Firefox */
+  -webkit-appearance:none; /* Safari and Chrome */
+  appearance:none;
+  background-image: url(@/assets/icons/down_arrow.svg);
+  background-repeat: no-repeat;
+  background-position: right 15px center;
+}

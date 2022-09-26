@@ -1,0 +1,32 @@
+{
+  "sl":{
+    "create-new-account": "Ustvari nov račun",
+    "e-mail": "E-naslov",
+    "password": "Geslo",
+    "login": "Prijava",
+    "logging-in": "Prijava poteka...",
+    "open-app": "Nadaljuj v aplikacijo",
+    "try-again": "Poskusi ponovno",
+    "welcome-back": "Dobrodošli nazaj",
+    "create-account": "Ustvari račun",
+    "incorrect-password": "Geslo, ki ste ga vnesli je nepravilno!",
+    "network-error": "Omrežna napaka! Prosimo preverite vašo internetno povezavo!",
+    "too-many-requests": "Preveč poskusov! Vzamite si oddih in ponovno poskusite čez nekaj minut.",
+    "login-failed": "Prijava ni uspela zaradi neznanega razloga! Prosimo poskusite kasneje!"
+  },
+  "en":{
+    "create-new-account": "Create new account",
+    "e-mail": "E-mail",
+    "password": "Password",
+    "login": "Log in",
+    "logging-in": "Logging in...",
+    "open-app": "Open app",
+    "try-again": "Try again",
+    "welcome-back": "Welcome back",
+    "create-account": "Create account ",
+    "incorrect-password": "The password you've entered is incorrect!",
+    "network-error": "Network error! Please check your internet connection.",
+    "too-many-requests": "To many tries! Take a break and try again in couple of minutes.",
+    "login-failed": "Login failed for unknown reason. Occurance has been sent to review. Please try again later."
+  }
+}
