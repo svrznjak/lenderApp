@@ -1,7 +1,9 @@
+import { IInterestRate } from "./../types/interestRateInterface";
 import { acceptHMRUpdate, defineStore } from "pinia";
 import { getAuth, signInWithEmailAndPassword, signOut } from "firebase/auth";
 import { gql } from "graphql-request";
 import requestBackend from "./helpers/requestBackend";
+import { IBudget } from "@/types/budgetInterface";
 
 export const useUserStore = defineStore("UserStore", {
   state: () => ({ user: undefined as Object | undefined }),
@@ -89,7 +91,7 @@ export const useUserStore = defineStore("UserStore", {
         }
       `;
       try {
-        const response = (await requestBackend({ gql: query, headers: { authorization: accessToken } })).User.user;
+        const response = (await requestBackend({ gql: query })).User.user;
         this.user = {
           _id: response._id,
           name: response.name,
@@ -101,10 +103,60 @@ export const useUserStore = defineStore("UserStore", {
           budgets: response.budgets,
           loans: response.loans,
         };
-      } catch (err) {
-        alert(err);
+      } catch (err: any) {
         console.log(err);
+        throw new Error(err);
       }
+    },
+    async createBudget({
+      name,
+      description,
+      defaultInterestRate,
+      initialTransactionDescription,
+      initialAmount,
+    }: {
+      name: string;
+      description: string;
+      defaultInterestRate: Pick<IInterestRate, "type" | "duration" | "amount">;
+      initialTransactionDescription: string;
+      initialAmount: number;
+    }): Promise<IBudget> {
+      const variables = {
+        name,
+        description,
+        type: defaultInterestRate.type,
+        duration: defaultInterestRate.duration,
+        amount: defaultInterestRate.amount,
+        initialTransactionDescription,
+        initialAmount,
+      };
+
+      const query = gql`
+        mutation (
+          $name: String!
+          $description: String!
+          $type: DurationTypeInput!
+          $duration: DurationInput!
+          $amount: Int!
+          $initialAmount: Int!
+          $initialTransactionDescription: String!
+        ) {
+          User {
+            createBudget(
+              name: $name
+              description: $description
+              defaultInterestRate: { type: $type, duration: $duration, amount: $amount }
+              initialAmount: $initialAmount
+              initialTransactionDescription: $initialTransactionDescription
+            ) {
+              _id
+              name
+              description
+            }
+          }
+        }
+      `;
+      return await requestBackend({ gql: query, variables });
     },
   },
   getters: {},

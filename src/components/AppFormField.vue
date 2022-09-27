@@ -5,6 +5,8 @@ export default {
 </script>
 
 <script setup lang="ts">
+import { type } from 'os';
+
 
 defineProps({
   name: {
@@ -16,7 +18,7 @@ defineProps({
     default: '',
   },
   modelValue: {
-    type: String,
+    type: [Number, String],
     default: '',
   },
 })

@@ -47,6 +47,7 @@ async function login() {
     isLoading.value = false;
     console.log(JSON.stringify(err));
     if (err.code === "auth/wrong-password") loginError.value = t("incorrect-password");
+    else if (err.code === "auth/user-not-found") loginError.value = t("incorrect-password");
     else if (err.code === "auth/network-request-failed") loginError.value = t("network-error");
     else if (err.code === "auth/too-many-requests") loginError.value = t("too-many-requests");
     else loginError.value = t("login-failed");

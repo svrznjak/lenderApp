@@ -29,21 +29,36 @@
 
 }
 
+body{
+  height: 100%;
+}
+
+#app-content > * {
+  margin-bottom: 20px !important;
+}
+
 h1 {
   font-size: 25px;
   font-weight: 600;
 }
 
 h2 {
-  font-size: 23px;
+  font-size: 21px;
   font-weight: 600;
 }
+form > * {
+  margin-bottom: 20px;
+}
+form > h2 {
+  margin-top: 35px;  
+}
+
 h3 {
   font-size: 19px;
-  font-weight: 400;
+  font-weight: 600;
 }
 h4 {
-  font-size: 15px;
+  font-size: 16px;
   font-weight: 500;
   color: var(--softtextColor);
 }
@@ -52,9 +67,6 @@ p, label{
   font-weight: 400;
 }
 
-label{
-  margin-left: 3px;
-}
 
 input,select,textarea{
   font-family: BasierCircle;
@@ -67,7 +79,7 @@ input,select,textarea{
   border: 2px solid var(--borderColor);
   border-radius: 5px;
   width: calc(100% - 34px);
-  margin-top: 5px;
+  margin-top: 7px;
   transition:all 0.2s;
   -webkit-tap-highlight-color: rgba(0,0,0,0);
   &:focus{

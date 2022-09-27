@@ -1,5 +1,7 @@
 import { GraphQLClient } from "graphql-request";
+import { getAuth } from "firebase/auth";
 
+// const endpoint = "http://localhost:9000/graphql";
 const endpoint = "http://192.168.0.15:9000/graphql";
 
 export default async function requestBackend({
@@ -11,8 +13,13 @@ export default async function requestBackend({
   variables?: any;
   headers?: any;
 }) {
+  const accessToken = getAuth().currentUser?.accessToken || "";
+  console.log(accessToken);
   const client = new GraphQLClient(endpoint, {
-    headers,
+    headers: {
+      authorization: accessToken,
+      ...headers,
+    },
     jsonSerializer: {
       parse: JSON.parse,
       stringify: JSON.stringify,

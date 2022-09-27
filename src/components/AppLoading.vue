@@ -22,5 +22,6 @@ onMounted(() => {
 <style scoped>
 #lottie-container {
   max-width: 200px;
+  margin: auto;
 }
 </style>

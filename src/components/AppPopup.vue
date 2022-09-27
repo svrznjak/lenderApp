@@ -23,6 +23,7 @@ defineProps({
 <style scoped>
 #overlay {
   position: fixed;
+  z-index: 9900;
   top: 0px;
   left: 0px;
   height: 100%;
@@ -32,8 +33,6 @@ defineProps({
   display: flex;
   justify-content: center;
   align-items: center;
-  -webkit-backdrop-filter: blur(4px);
-  backdrop-filter: blur(4px);
 }
 
 #content {

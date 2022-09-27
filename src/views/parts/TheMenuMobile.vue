@@ -67,7 +67,7 @@ function openNew() {
   width: 100%;
   left: 0px;
   bottom: 0px;
-  z-index: 9999;
+  z-index: 9801;
   color: #fff;
   height: 60px;
   background-color: var(--primaryColor);
@@ -116,7 +116,7 @@ function openNew() {
   width: 100%;
   left: 0px;
   bottom: 60px;
-  z-index: 9998;
+  z-index: 9800;
   transition: all 0.6s;
   transform: translate(0px, 100%);
   color: #fff;
