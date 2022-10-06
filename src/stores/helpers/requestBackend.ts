@@ -15,7 +15,8 @@ export default async function requestBackend({
   variables?: any;
   headers?: any;
 }) {
-  const accessToken = getAuth().currentUser?.accessToken || "";
+  const auth: any = getAuth();
+  const accessToken = auth.currentUser.accessToken || "";
   console.log(accessToken);
   const client = new GraphQLClient(endpoint, {
     headers: {

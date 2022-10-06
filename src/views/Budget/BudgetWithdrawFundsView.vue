@@ -10,11 +10,19 @@ import AppLoading from '@/components/AppLoading.vue';
 import router from '@/router';
 import messages from './BudgetWithdrawFundsView.i18n.json';
 import { useI18n } from 'vue-i18n';
+import { useBudgetStore } from '@/stores/budget';
 const { t, locale } = useI18n({
   messages
 });
-const { user, withdrawFundsFromBudget } = useUserStore();
-locale.value = user.language;
+const props = defineProps({
+  id: {
+    type: String,
+    required: true,
+  },
+});
+const userStore = useUserStore();
+const budgetStore = useBudgetStore();
+locale.value = userStore.user!.language;
 
 const now = new Date();
 const form = reactive({
@@ -36,14 +44,13 @@ async function submitBudget() {
   popupState.isDisplayed = true;
   popupState.isLoading = true;
   try {
-    console.log(router.currentRoute.value.params.id);
     const data = {
-      budgetId: router.currentRoute.value.params.id,
+      budgetId: props.id,
       transactionTimestamp: new Date(form.transactionTimestramp).getTime(),
       description: form.description,
       amount: form.amount,
     }
-    await withdrawFundsFromBudget(data);
+    await budgetStore.withdrawFundsFromBudget(data);
     popupState.isLoading = false;
     popupState.isSuccess = true;
 

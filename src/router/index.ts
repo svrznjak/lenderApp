@@ -1,5 +1,4 @@
-import { createRouter, createWebHistory } from "vue-router";
-import HomeView from "../views/HomeView.vue";
+import { createRouter, createWebHistory, RouteLocationNormalized } from "vue-router";
 import LoginView from "@/views/LoginView.vue";
 import RegisterView from "@/views/RegisterView.vue";
 import BudgetsView from "@/views/Budget/BudgetsView.vue";
@@ -15,12 +14,6 @@ import { useUserStore } from "@/stores/user";
 const router = createRouter({
   history: createWebHistory(),
   routes: [
-    {
-      path: "/",
-      name: "home",
-      component: HomeView,
-      meta: { requiresAuth: true },
-    },
     {
       path: "/login",
       name: "login",
@@ -144,8 +137,8 @@ const router = createRouter({
       meta: { requiresAuth: true },
     },
   ],
-  scrollBehavior(to) {
-    const scroll = {};
+  scrollBehavior(to): any {
+    const scroll = { behavior: "" };
     //if (to.meta.toTop) scroll.top = 0;
     if (to.meta.smoothScroll) scroll.behavior = "smooth";
     return scroll;
@@ -161,7 +154,7 @@ router.beforeEach(async (to, from) => {
   }
 });
 
-function generateTransitionName(from, to) {
+function generateTransitionName(from: RouteLocationNormalized, to: RouteLocationNormalized) {
   console.log(from);
   console.log(to);
   if (from.name === "budgets" && to.name === "budget") return "slide-left";

@@ -12,12 +12,16 @@ import messages from './BudgetAddView.i18n.json';
 import { useI18n } from 'vue-i18n';
 import ScrollArea from '../parts/ScrollArea.vue';
 import { setLocale } from "@vee-validate/i18n";
+import { useBudgetStore } from '@/stores/budget';
+import { IInterestRate } from '@/types/interestRateInterface';
+import { IBudget } from '@/types/budgetInterface';
 const { t, locale } = useI18n({
   messages
 });
-const { user, createBudget } = useUserStore();
-locale.value = user.language;
-setLocale(user.language);
+const userStore = useUserStore();
+const budgetStore = useBudgetStore();
+locale.value = userStore.user!.language;
+setLocale(userStore.user!.language);
 
 const form = reactive({
   name: '',
@@ -38,7 +42,7 @@ const popupState = reactive({
   errorMessage: ''
 });
 
-let createdBudget = null;
+let createdBudget: IBudget | null = null;
 
 async function submitBudget() {
   console.log(form);
@@ -56,12 +60,11 @@ async function submitBudget() {
         expectedPayments: 'ONE_TIME',
         amount: amount,
         isCompounding: (form.isCompounding === 'YES' ? true : false)
-      },
+      } as Pick<IInterestRate, "type" | "duration" | "expectedPayments" | "amount" | "isCompounding">,
       initialTransactionDescription: t('initial-transaction-description'),
       initialAmount: form.initialFunds,
     }
-    createdBudget = await createBudget(data);
-    console.log(createdBudget);
+    createdBudget = await budgetStore.createBudget(data);
     popupState.isLoading = false;
     popupState.isSuccess = true;
 
@@ -75,7 +78,8 @@ async function submitBudget() {
 }
 
 function openNewBudget() {
-  router.replace({ name: 'budget', params: { id: createdBudget._id } });
+  if (createdBudget !== null)
+    router.replace({ name: 'budget', params: { id: createdBudget._id } });
 }
 
 function closePopup() {

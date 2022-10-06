@@ -5,7 +5,7 @@ import {
 import TheHeaderEdit from '@/views/parts/TheHeaderEdit.vue';
 import { useUserStore } from '@/stores/user';
 import ContentContainer from '../parts/ContentContainer.vue';
-import { reactive, ref, watch } from 'vue';
+import { onMounted, reactive, ref, watch } from 'vue';
 import AppFormField from '@/components/AppFormField.vue';
 import AppButton from '@/components/AppButton.vue';
 import AppPopup from '@/components/AppPopup.vue';
@@ -20,11 +20,21 @@ import messages from './LoanAddView.i18n.json';
 import { useI18n } from 'vue-i18n';
 import AppInfoBadge from '@/components/AppInfoBadge.vue';
 import IFund from '@/types/fundInterface';
+import { useLoanStore } from '@/stores/loan';
+import { useBudgetStore } from '@/stores/budget';
+import { IInterestRate } from '@/types/interestRateInterface';
 const { t, locale } = useI18n({
   messages
 });
-const { user, createLoan, getBudgetById } = useUserStore();
-locale.value = user.language;
+const userStore = useUserStore();
+const loanStore = useLoanStore();
+const budgetStore = useBudgetStore();
+
+onMounted(async () => {
+  await budgetStore.syncBudgets();
+});
+
+locale.value = userStore.user!.language;
 
 
 
@@ -41,7 +51,7 @@ const form = reactive({
   duration: 'YEAR',
   isCompounding: 'NO',
   expectedPayments: 'MONTHLY',
-  funds: []
+  funds: [] as IFund[]
 });
 
 const addFundsForm = reactive({
@@ -136,11 +146,11 @@ async function submitLoan() {
         expectedPayments: form.expectedPayments,
         amount: amount,
         isCompounding: (form.isCompounding === 'YES' ? true : false)
-      },
+      } as Pick<IInterestRate, "type" | "duration" | "expectedPayments" | "amount" | "isCompounding">,
       initialTransactionDescription: t('initial-transaction-description'),
       funds: form.funds,
     }
-    createdLoan = await createLoan(data);
+    createdLoan = await loanStore.createLoan(data);
     console.log(createdLoan);
     popupState.isLoading = false;
     popupState.isSuccess = true;
@@ -204,19 +214,20 @@ function openSelectFundsPopup() {
           <h2>{{t('select-funds-for-this-loan')}}</h2>
 
           <AppCard v-for="fund in form.funds" :key="fund.budgetId">
-            <h2>{{ getBudgetById(fund.budgetId).name}}</h2>
+            <h2>{{ budgetStore.getBudgetById(fund.budgetId)!.name}}</h2>
             <div style="margin-top:10px; display:flex;">
               <h4 style="padding: 3px 5px 0px 0px;">Selected funds:</h4>
               <h3>
-                <AppCurrencyNumber :amount="fund.amount" :currency="user.currency" :locale="user.language" />
+                <AppCurrencyNumber :amount="fund.amount" :currency="userStore.user!.currency"
+                  :locale="userStore.user!.language" />
               </h3>
             </div>
             <div style="margin-top:10px; display:flex;">
               <h4 style="padding: 3px 5px 0px 0px;">Avaiable funds:</h4>
               <h3>
                 <AppCurrencyNumber
-                  :amount="getBudgetById(fund.budgetId).calculatedTotalAmount - getBudgetById(fund.budgetId).calculatedLendedAmount"
-                  :currency="user.currency" :locale="user.language" />
+                  :amount="budgetStore.getBudgetById(fund.budgetId)!.calculatedTotalAmount - budgetStore.getBudgetById(fund.budgetId)!.calculatedLendedAmount"
+                  :currency="userStore.user!.currency" :locale="userStore.user!.language" />
               </h3>
             </div>
           </AppCard>
@@ -272,13 +283,13 @@ function openSelectFundsPopup() {
               type="number" rules="required|min_value:0|max_value:999999999" />
             <h2>Select budget</h2>
             <AppCard :hasArrow="true" @click="addFund({budgetId: budget._id, amount: addFundsForm.newFundsAmount})"
-              v-for="budget in user.budgets" :key="budget._id">
+              v-for="budget in budgetStore.budgets" :key="budget._id">
               <h2>{{ budget.name}}</h2>
               <div style="margin-top:10px; display:flex;">
                 <h4 style="padding: 3px 5px 0px 0px;">Avaiable:</h4>
                 <h3>
                   <AppCurrencyNumber :amount="budget.calculatedTotalAmount - budget.calculatedLendedAmount"
-                    :currency="user.currency" :locale="user.language" />
+                    :currency="userStore.user!.currency" :locale="userStore.user!.language" />
                 </h3>
               </div>
             </AppCard>

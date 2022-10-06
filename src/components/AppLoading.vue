@@ -5,7 +5,7 @@ const LoadingAnimationURL = new URL('../assets/loading.json', import.meta.url).h
 
 onMounted(() => {
   lottie.loadAnimation({
-    container: document.getElementById('lottie-container'), // the dom element that will contain the animation
+    container: document.getElementById('lottie-container') as Element, // the dom element that will contain the animation
     renderer: 'svg',
     loop: true,
     autoplay: true,

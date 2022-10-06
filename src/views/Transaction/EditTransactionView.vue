@@ -22,8 +22,8 @@ const props = defineProps({
     required: true,
   },
 });
-const { user } = useUserStore();
-locale.value = user.language;
+const userStore = useUserStore();
+locale.value = userStore.user!.language;
 
 
 const { getTransaction, updateTransaction } = useTransactionStore();

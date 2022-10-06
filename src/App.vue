@@ -1,11 +1,13 @@
 <script setup lang="ts">
+import { TransitionProps } from 'vue';
+
 
 </script>
 
 <template>
   <router-view v-slot="{ Component, route }">
     <!-- Use any custom transition and fallback to `fade` -->
-    <Transition :name="route.meta.transition || 'fade'">
+    <Transition :name="route.meta.transition as string || 'fade'">
       <component :is="Component" />
     </Transition>
   </router-view>

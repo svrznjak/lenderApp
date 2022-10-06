@@ -2,7 +2,7 @@
 import TheHeaderEdit from '@/views/parts/TheHeaderEdit.vue';
 import { useUserStore } from '@/stores/user';
 import ContentContainer from '../parts/ContentContainer.vue';
-import { reactive, ref } from 'vue';
+import { onMounted, reactive, ref } from 'vue';
 import AppFormField from '@/components/AppFormField.vue';
 import AppButton from '@/components/AppButton.vue';
 import AppPopup from '@/components/AppPopup.vue';
@@ -13,6 +13,8 @@ import router from '@/router';
 import messages from './LoanAddPaymentView.i18n.json';
 import { useI18n } from 'vue-i18n';
 import ScrollArea from '../parts/ScrollArea.vue';
+import { useBudgetStore } from '@/stores/budget';
+import { useLoanStore } from '@/stores/loan';
 const { t, locale } = useI18n({
   messages
 });
@@ -22,8 +24,14 @@ const props = defineProps({
     required: true,
   },
 });
-const { user, addPaymentToLoan, getBudgetById } = useUserStore();
-locale.value = user.language;
+const userStore = useUserStore();
+const budgetStore = useBudgetStore();
+const loanStore = useLoanStore();
+locale.value = userStore.user!.language;
+
+onMounted(async () => {
+  await budgetStore.syncBudgets();
+});
 
 const now = new Date();
 const form = reactive({
@@ -63,7 +71,7 @@ async function submitPayment() {
       description: form.description,
       amount: form.amount,
     }
-    await addPaymentToLoan(data);
+    await loanStore.addPaymentToLoan(data);
     popupState.isLoading = false;
     popupState.isSuccess = true;
 
@@ -106,7 +114,7 @@ function closePopup() {
           </AppButton>
           <p>{{t('budget-to-pay-to')}}</p>
           <AppCard v-if="form.selectedBudgetId.length !== 0">
-            <h2>{{ getBudgetById(form.selectedBudgetId).name}}</h2>
+            <h2>{{ budgetStore.getBudgetById(form.selectedBudgetId)!.name}}</h2>
           </AppCard>
           <AppButton v-show="form.selectedBudgetId.length !== 0" styleType="empty" @click.prevent="openSelectBudget">
             {{t('select-different-budget')}}
@@ -124,14 +132,14 @@ function closePopup() {
             <h1 style="text-align: left;">{{t('select-budget')}}...</h1>
             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla eleifend velit id euismod dictum. Cras est
               augue, tincidunt in ex a.</p>
-            <AppCard :hasArrow="true" @click="selectBudget(budget._id)" v-for="budget in user.budgets"
+            <AppCard :hasArrow="true" @click="selectBudget(budget._id)" v-for="budget in budgetStore.budgets"
               :key="budget._id">
               <h2>{{ budget.name}}</h2>
               <div style="margin-top:10px; display:flex;">
                 <h4 style="padding: 3px 5px 0px 0px;">Avaiable:</h4>
                 <h3>
                   <AppCurrencyNumber :amount="budget.calculatedTotalAmount - budget.calculatedLendedAmount"
-                    :currency="user.currency" :locale="user.language" />
+                    :currency="userStore.user!.currency" :locale="userStore.user!.language" />
                 </h3>
               </div>
             </AppCard>

@@ -23,11 +23,11 @@ const thisScrollArea = ref<HTMLElement | null>(null);
 onMounted(() => {
   recalculateScrollAreaHeight();
   if (props.saveScrollTop)
-    thisScrollArea.value.scrollTop = getScrollTop(thisScrollUrl);
+    thisScrollArea.value!.scrollTop = getScrollTop(thisScrollUrl);
 });
 onBeforeUnmount(() => {
   if (props.saveScrollTop)
-    saveScrollTop(thisScrollUrl, thisScrollArea.value.scrollTop)
+    saveScrollTop(thisScrollUrl, thisScrollArea.value!.scrollTop)
 
 })
 onUnmounted(() => {
@@ -39,7 +39,7 @@ window.addEventListener("resize", recalculateScrollAreaHeight);
 function recalculateScrollAreaHeight() {
   const scrollAreaElement = thisScrollArea.value;
 
-  const siblings = getSiblings(scrollAreaElement);
+  const siblings = getSiblings(scrollAreaElement!);
 
   let siblingsHeight = 0;
   siblings.forEach((sibling) => {
@@ -50,10 +50,10 @@ function recalculateScrollAreaHeight() {
     siblingsHeight += sibling.clientHeight;
   });
   let containerHeight = innerHeight * (props.heightPercentage / 100);
-  scrollAreaElement.style.height = `${containerHeight - siblingsHeight}px`;
+  scrollAreaElement!.style.height = `${containerHeight - siblingsHeight}px`;
 }
 
-let getSiblings = function (e) {
+let getSiblings = function (e: HTMLElement) {
   // for collecting siblings
   let siblings: any[] = [];
   // if no parent, return no sibling

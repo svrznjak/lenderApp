@@ -28,22 +28,22 @@ const pinia = createPinia();
 app.component("AppButton", AppButton);
 app.use(pinia);
 const userStore = useUserStore();
-const user = await new Promise((resolve) => {
-  const auth = getAuth();
-  onAuthStateChanged(auth, async function (user: any) {
-    if (user) {
-      //if (router.currentRoute.value.query.redirectTo) router.push({ path: router.currentRoute.value.query.redirectTo });
-      //else {
-      //  router.push({ name: "budgets" });
-      //}
-      resolve(user);
-    } else {
-      userStore.user = undefined;
-      if (router.currentRoute.value.name !== "login") router.push({ name: "login" });
-      resolve(null);
-    }
-  });
+//const user = await new Promise((resolve) => {
+const auth = getAuth();
+onAuthStateChanged(auth, async function (user: any) {
+  if (user) {
+    //if (router.currentRoute.value.query.redirectTo) router.push({ path: router.currentRoute.value.query.redirectTo });
+    //else {
+    //  router.push({ name: "budgets" });
+    //}
+    //resolve(user);
+  } else {
+    userStore.user = undefined;
+    if (router.currentRoute.value.name !== "login") router.push({ name: "login" });
+    //resolve(null);
+  }
 });
+//});
 
 const i18n = createI18n({
   legacy: false, // you must set `false`, to use Composition API

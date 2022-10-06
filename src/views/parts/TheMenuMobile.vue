@@ -13,8 +13,8 @@ const { t, locale } = useI18n({
   messages
 });
 
-const { user } = useUserStore()
-locale.value = user.language;
+const userStore = useUserStore()
+locale.value = userStore.user!.language;
 
 const props = defineProps({
   newButtonText: {

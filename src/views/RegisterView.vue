@@ -57,8 +57,8 @@ async function register() {
     popupState.errorMessageForRegistration = t("account-created");
 
     try {
-      const loginResponse = await userStore.loginWithEmailAndPassword(form.email, form.password);
-      await userStore.getUserData(loginResponse.user.accessToken);
+      await userStore.loginWithEmailAndPassword(form.email, form.password);
+      await userStore.getUserData();
 
       popupState.isLoading = false;
       popupState.isSuccess = true;
@@ -110,7 +110,7 @@ function enterApp() {
         <h1 style="text-align: center;">{{t('creating-account')}}</h1>
       </div>
       <div v-if="popupState.isSuccess">
-        <h1 style="text-align: center;">{{t('account-created', [userStore.user.name])}}!</h1>
+        <h1 style="text-align: center;">{{t('account-created', [userStore.user!.name])}}!</h1>
         <AppButton style="margin-top:20px;" @click="enterApp">{{t('open-app')}}</AppButton>
       </div>
       <div v-if="popupState.isError">

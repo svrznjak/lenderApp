@@ -2,7 +2,7 @@
 import TheHeaderEdit from '@/views/parts/TheHeaderEdit.vue';
 import { useUserStore } from '@/stores/user';
 import ContentContainer from '../parts/ContentContainer.vue';
-import { reactive, ref } from 'vue';
+import { reactive } from 'vue';
 import AppFormField from '@/components/AppFormField.vue';
 import AppButton from '@/components/AppButton.vue';
 import AppPopup from '@/components/AppPopup.vue';
@@ -10,14 +10,20 @@ import AppLoading from '@/components/AppLoading.vue';
 import router from '@/router';
 import messages from './BudgetAddFundsView.i18n.json';
 import { useI18n } from 'vue-i18n';
-import BudgetAddViewVue from './BudgetAddView.vue';
-import NoteAddViewVue from '../NoteAddView.vue';
 import ScrollArea from '../parts/ScrollArea.vue';
+import { useBudgetStore } from '@/stores/budget';
 const { t, locale } = useI18n({
   messages
 });
-const { user, addFundsToBudget } = useUserStore();
-locale.value = user.language;
+const props = defineProps({
+  id: {
+    type: String,
+    required: true,
+  },
+});
+const userStore = useUserStore();
+const budgetStore = useBudgetStore();
+locale.value = userStore.user!.language;
 
 const now = new Date();
 const form = reactive({
@@ -39,14 +45,13 @@ async function submitBudget() {
   popupState.isDisplayed = true;
   popupState.isLoading = true;
   try {
-    console.log(router.currentRoute.value.params.id);
     const data = {
-      budgetId: router.currentRoute.value.params.id,
+      budgetId: props.id,
       transactionTimestamp: new Date(form.transactionTimestramp).getTime(),
       description: form.description,
       amount: form.amount,
     }
-    await addFundsToBudget(data);
+    await budgetStore.addFundsToBudget(data);
     popupState.isLoading = false;
     popupState.isSuccess = true;
 

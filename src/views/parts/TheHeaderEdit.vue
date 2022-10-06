@@ -12,7 +12,7 @@ const { t, locale } = useI18n({
   messages
 });
 const userStore = useUserStore();
-locale.value = userStore.user.language;
+locale.value = userStore.user!.language;
 
 defineProps({
   closeText: {

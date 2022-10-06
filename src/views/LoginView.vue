@@ -38,11 +38,11 @@ async function login() {
   try {
     const result = await userStore.loginWithEmailAndPassword(form.email, form.password);
     console.log(result);
-    await userStore.getUserData(result.user.accessToken);
-    locale.value = userStore.user.language;
+    await userStore.getUserData();
+    locale.value = userStore.user!.language;
     isLoading.value = false;
     isSuccess.value = true;
-    userName.value = userStore.user.name;
+    userName.value = userStore.user!.name;
 
   } catch (err: any) {
     isLoading.value = false;
@@ -64,7 +64,7 @@ function closePopup() {
 
 
 function enterApp() {
-  if (router.currentRoute.value.query.redirectTo) router.push({ path: router.currentRoute.value.query.redirectTo });
+  if (router.currentRoute.value.query.redirectTo) router.push({ path: router.currentRoute.value.query.redirectTo as string });
   else router.push({ name: 'budgets' });
 }
 

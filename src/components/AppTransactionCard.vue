@@ -12,9 +12,9 @@ import { useTransactionStore } from '@/stores/transaction';
 const { t, locale } = useI18n({
   messages
 });
-const { user } = useUserStore();
+const userStore = useUserStore();
 const transactionStore = useTransactionStore();
-locale.value = user.language;
+locale.value = userStore.user!.language;
 const props = defineProps({
   transactionId: {
     type: String,
