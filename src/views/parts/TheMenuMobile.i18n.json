@@ -1,0 +1,14 @@
+{
+  "sl":{
+    "budgets": "Proračuni",
+    "loans": "Posojila",
+    "analytics": "Analitika",
+    "my-profile": "Moj račun"
+  },
+  "en":{
+    "budgets": "Budgets",
+    "loans": "Loans",
+    "analytics": "Analytics",
+    "my-profile": "My account"
+  }
+}

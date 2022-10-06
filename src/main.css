@@ -31,10 +31,10 @@
 
 body{
   height: 100%;
+  overflow: hidden;
 }
-
-#app-content > * {
-  margin-bottom: 20px !important;
+main {
+  background-color: var(--backgroundColor);
 }
 
 h1 {

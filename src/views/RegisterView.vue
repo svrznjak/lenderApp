@@ -7,7 +7,8 @@ import AppFormField from '@/components/AppFormField.vue';
 import AppLoading from "@/components/AppLoading.vue";
 import AppPopup from "@/components/AppPopup.vue";
 import { reactive, watch } from 'vue';
-
+import ContentContainer from "./parts/ContentContainer.vue";
+import ScrollArea from './parts/ScrollArea.vue';
 import router from '@/router';
 import { useUserStore } from "@/stores/user";
 
@@ -118,26 +119,30 @@ function enterApp() {
         <AppButton styleType="empty" style="margin-top:20px;" @click="closePopup">{{t('try-again')}}</AppButton>
       </div>
     </AppPopup>
-    <TheHeaderMain style="text-align:center; margin-bottom: 40px;">{{t('create-new-account')}}</TheHeaderMain>
-    <VeeForm @submit="register">
-      <AppFormField name="name" :label="t('name')" v-model="form.name" rules="required" />
-      <AppFormField name="email" :label="t('e-mail')" v-model="form.email" type="e-mail" rules="required|email" />
-      <AppFormField name="password" :label="t('password')" v-model="form.password" type="password"
-        rules="required|min:6" />
-      <AppFormField name="password-repeat" :label="t('password-repeat')" v-model="form.passwordRepeat" type="password"
-        rules="required|confirmed:@password" />
-      <AppFormField as="select" name="currency" :label="t('currency')" v-model="form.currency" rules="required">
-        <option v-for="currency,index in currencies" :value="index">{{currency.name}} ({{currency.symbol_native}})
-        </option>
-      </AppFormField>
-      <AppFormField as="select" name="language" :label="t('language')" v-model="form.language" rules="required">
-        <option v-for="locale,index in locales" :value="index">{{locale[0]}}</option>
-      </AppFormField>
+    <ScrollArea>
+      <ContentContainer>
+        <TheHeaderMain style="text-align:center; margin-bottom: 40px;">{{t('create-new-account')}}</TheHeaderMain>
+        <VeeForm @submit="register">
+          <AppFormField name="name" :label="t('name')" v-model="form.name" rules="required" />
+          <AppFormField name="email" :label="t('e-mail')" v-model="form.email" type="e-mail" rules="required|email" />
+          <AppFormField name="password" :label="t('password')" v-model="form.password" type="password"
+            rules="required|min:6" />
+          <AppFormField name="password-repeat" :label="t('password-repeat')" v-model="form.passwordRepeat"
+            type="password" rules="required|confirmed:@password" />
+          <AppFormField as="select" name="currency" :label="t('currency')" v-model="form.currency" rules="required">
+            <option v-for="currency,index in currencies" :value="index">{{currency.name}} ({{currency.symbol_native}})
+            </option>
+          </AppFormField>
+          <AppFormField as="select" name="language" :label="t('language')" v-model="form.language" rules="required">
+            <option v-for="locale,index in locales" :value="index">{{locale[0]}}</option>
+          </AppFormField>
 
-      <AppButton type="submit">{{t('create-account')}}</AppButton>
-    </VeeForm>
-    <AppButton style="margin-top:20px;" @click="$router.push({name: 'login'})" styleType="empty">
-      {{t('login')}}</AppButton>
+          <AppButton type="submit">{{t('create-account')}}</AppButton>
+        </VeeForm>
+        <AppButton @click="$router.push({name: 'login'})" styleType="empty">
+          {{t('login')}}</AppButton>
+      </ContentContainer>
+    </ScrollArea>
   </main>
 </template>
 
@@ -145,7 +150,6 @@ function enterApp() {
 main {
   max-width: 600px;
   margin: auto;
-  padding: 50px;
 
   & * {
     margin-bottom: 10px;

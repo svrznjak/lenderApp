@@ -1,0 +1,10 @@
+{
+  "sl":{
+    "loans": "Posojila",
+    "new-loan": "Novo posojilo"
+  },
+  "en":{
+    "loans": "Loans",
+    "new-loan": "New loan"
+  }
+}

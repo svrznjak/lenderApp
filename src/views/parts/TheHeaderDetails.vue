@@ -12,10 +12,10 @@ import backIcon from '@/assets/icons/back.svg'
 </template>
 
 <style scoped>
-#header-details{
-  padding:40px 20px;
+#header-details {
+  padding: 40px 20px;
   border-bottom: 2px solid var(--borderColor);
   display: flex;
-
+  cursor: pointer;
 }
 </style>

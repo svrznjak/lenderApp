@@ -1,12 +1,11 @@
-import { IInterestRate } from "./../types/interestRateInterface";
 import { acceptHMRUpdate, defineStore } from "pinia";
 import { getAuth, signInWithEmailAndPassword, signOut } from "firebase/auth";
 import { gql } from "graphql-request";
 import requestBackend from "./helpers/requestBackend";
-import { IBudget } from "@/types/budgetInterface";
+import { IUser } from "@/types/userInterface";
 
 export const useUserStore = defineStore("UserStore", {
-  state: () => ({ user: undefined as Object | undefined }),
+  state: () => ({ user: undefined as IUser | undefined }),
   actions: {
     async createAccount(variables: {
       name: string;
@@ -35,7 +34,7 @@ export const useUserStore = defineStore("UserStore", {
       const auth: any = getAuth();
       await signOut(auth);
     },
-    async getUserData(accessToken: string) {
+    async getUserData() {
       const query = gql`
         query {
           User {
@@ -44,44 +43,8 @@ export const useUserStore = defineStore("UserStore", {
               name
               email
               authId
-              budgets {
-                _id
-                name
-                description
-                defaultInterestRate {
-                  type
-                  duration
-                  amount
-                  entryTimestamp
-                }
-                calculatedTotalAmount
-                calculatedLendedAmount
-              }
-              loans {
-                _id
-                name
-                description
-                notes {
-                  _id
-                  content
-                  entryTimestamp
-                }
-                openedTimestamp
-                closesTimestamp
-                interestRate {
-                  type
-                  duration
-                  amount
-                  entryTimestamp
-                }
-                initialPrincipal
-                status
-                calculatedTotalPaidPrincipal
-                calculatedChargedInterest
-                calculatedPaidInterest
-              }
-              currency
               language
+              currency
               subscription {
                 revenuecatId
                 type
@@ -100,63 +63,11 @@ export const useUserStore = defineStore("UserStore", {
           currency: response.currency,
           language: response.language,
           subscription: response.subscription,
-          budgets: response.budgets,
-          loans: response.loans,
         };
       } catch (err: any) {
         console.log(err);
         throw new Error(err);
       }
-    },
-    async createBudget({
-      name,
-      description,
-      defaultInterestRate,
-      initialTransactionDescription,
-      initialAmount,
-    }: {
-      name: string;
-      description: string;
-      defaultInterestRate: Pick<IInterestRate, "type" | "duration" | "amount">;
-      initialTransactionDescription: string;
-      initialAmount: number;
-    }): Promise<IBudget> {
-      const variables = {
-        name,
-        description,
-        type: defaultInterestRate.type,
-        duration: defaultInterestRate.duration,
-        amount: defaultInterestRate.amount,
-        initialTransactionDescription,
-        initialAmount,
-      };
-
-      const query = gql`
-        mutation (
-          $name: String!
-          $description: String!
-          $type: DurationTypeInput!
-          $duration: DurationInput!
-          $amount: Int!
-          $initialAmount: Int!
-          $initialTransactionDescription: String!
-        ) {
-          User {
-            createBudget(
-              name: $name
-              description: $description
-              defaultInterestRate: { type: $type, duration: $duration, amount: $amount }
-              initialAmount: $initialAmount
-              initialTransactionDescription: $initialTransactionDescription
-            ) {
-              _id
-              name
-              description
-            }
-          }
-        }
-      `;
-      return await requestBackend({ gql: query, variables });
     },
   },
   getters: {},

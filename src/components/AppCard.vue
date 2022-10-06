@@ -1,26 +1,21 @@
 <script setup lang="ts">
 import rightIcon from '@/assets/icons/right.svg';
-defineProps({
-  styleType: {
-    type: String,
-    default: 'regular',
-    validator(value: string) {
-      // The value must match one of these strings
-      return ['regular', 'empty', 'clean'].includes(value)
-    }
+const props = defineProps({
+  hasArrow: {
+    type: Boolean,
+    default: false,
   },
 })
-
 
 </script>
 
 <template >
   <div class="card">
-    <div>
+    <div style="width:100%;">
       <slot></slot>
     </div>
-    <div style="display:flex; align-items: center;">
-      <img style="width: 20px; position: absolute; right: 50px;" :src="rightIcon" alt=">" />
+    <div v-if="props.hasArrow" style="display:flex; align-items: center;">
+      <img style="width: 20px; right: 50px;" :src="rightIcon" alt=">" />
     </div>
   </div>
 </template>

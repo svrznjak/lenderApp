@@ -1,0 +1,28 @@
+{
+  "sl":{
+    "withdrawing-funds-to-budget": "Dvig sredstev iz proračuna",
+    "are-you-sure": "Ste prepričani, da želite prekiniti dvig sredstev?",
+    "info-about-new-transaction": "Informacije o dvigu",
+    "transaction-timestamp": "Datum dviga",
+    "description": "Opis dviga",
+    "amount": "Znesek dviga",
+    "withdraw-funds": "Dvigni sredstva",
+    "funds-withdraw": "Sredstva uspešno dvignjena",
+    "open-budget": "Odpri proračun",
+    "funds-withdrawal-failed": "Tehnična napaka! Dvig sredstev ni uspel.",
+    "try-again": "Poskusi ponovno"
+  },
+  "en":{
+    "withdrawing-funds-to-budget": "Dvig sredstev iz proračuna",
+    "are-you-sure": "Ste prepričani, da želite prekiniti dvig sredstev?",
+    "info-about-new-transaction": "Informacije o dvigu",
+    "transaction-timestamp": "Datum dviga",
+    "description": "Opis dviga",
+    "amount": "Znesek dviga",
+    "add-funds": "Dvigni sredstva",
+    "funds-added": "Sredstva uspešno dvignjena",
+    "open-budget": "Odpri proračun",
+    "funds-withdrawal-failed": "Tehnična napaka! Dvig sredstev ni uspel.",
+    "try-again": "Poskusi ponovno"
+  }
+}

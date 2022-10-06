@@ -6,9 +6,10 @@ import { reactive, ref } from 'vue';
 
 import { useUserStore } from "@/stores/user";
 
-
+import ContentContainer from './parts/ContentContainer.vue';
 import AppPopup from '@/components/AppPopup.vue';
 import AppLoading from '@/components/AppLoading.vue';
+import ScrollArea from './parts/ScrollArea.vue';
 import router from '@/router';
 import { useI18n } from 'vue-i18n';
 import messages from './LoginView.i18n.json';
@@ -72,29 +73,36 @@ function enterApp() {
 <template>
   <main>
     <AppPopup :isOpen="showPopup">
-      <div v-show=" isLoading">
-        <AppLoading />
-        <h1 style="text-align: center;">{{t('logging-in')}}</h1>
-      </div>
-      <div v-if="isSuccess">
-        <h1 style="text-align: center;">{{t('welcome-back')}}, {{userName}}!</h1>
-        <AppButton style="margin-top:20px;" @click="enterApp">{{t('open-app')}}</AppButton>
-      </div>
-      <div v-if="loginError">
-        <h1 style="text-align: center;">{{loginError}}</h1>
-        <AppButton styleType="empty" style="margin-top:20px;" @click="closePopup">{{t('try-again')}}</AppButton>
-      </div>
+      <ContentContainer>
+        <div v-show=" isLoading">
+          <AppLoading />
+          <h1 style="text-align: center;">{{t('logging-in')}}</h1>
+        </div>
+        <div v-if="isSuccess">
+          <h1 style="text-align: center;">{{t('welcome-back')}}, {{userName}}!</h1>
+          <AppButton style="margin-top:20px;" @click="enterApp">{{t('open-app')}}</AppButton>
+        </div>
+        <div v-if="loginError">
+          <h1 style="text-align: center;">{{loginError}}</h1>
+          <AppButton styleType="empty" style="margin-top:20px;" @click="closePopup">{{t('try-again')}}</AppButton>
+        </div>
+      </ContentContainer>
     </AppPopup>
+    <ScrollArea>
+      <ContentContainer>
+        <TheHeaderMain style="text-align:center; margin-bottom: 40px;">{{t('login')}}</TheHeaderMain>
+        <VeeForm @submit="login">
+          <AppFormField name="email" :label="t('e-mail')" v-model="form.email" type="e-mail" autocomplete="e-mail"
+            rules="required|email" />
+          <AppFormField name="password" :label="t('password')" v-model="form.password" type="password"
+            autocomplete="password" rules="required" />
+          <AppButton type="submit">{{t('login')}}</AppButton>
 
-    <TheHeaderMain style="text-align:center; margin-bottom: 40px;">{{t('login')}}</TheHeaderMain>
-    <VeeForm @submit="login">
-      <AppFormField name="email" :label="t('e-mail')" v-model="form.email" type="e-mail" rules="required|email" />
-      <AppFormField name="password" :label="t('password')" v-model="form.password" type="password" rules="required" />
-      <AppButton type="submit">{{t('login')}}</AppButton>
-
-    </VeeForm>
-    <AppButton style="margin-top:20px;" @click="router.push({name: 'Register'})" styleType="empty">
-      {{t('create-account')}}</AppButton>
+        </VeeForm>
+        <AppButton @click="router.push({name: 'Register'})" styleType="empty">
+          {{t('create-account')}}</AppButton>
+      </ContentContainer>
+    </ScrollArea>
   </main>
 </template>
 
@@ -102,7 +110,6 @@ function enterApp() {
 main {
   max-width: 600px;
   margin: auto;
-  padding: 50px;
 
   & * {
     margin-bottom: 10px;

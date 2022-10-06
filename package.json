@@ -11,6 +11,7 @@
   "dependencies": {
     "@vee-validate/i18n": "^4.6.9",
     "@vee-validate/rules": "^4.6.9",
+    "date-fns": "^2.29.3",
     "firebase": "^9.10.0",
     "graphql-request": "^5.0.0",
     "lottie-web": "^5.9.6",

@@ -1,0 +1,10 @@
+{
+  "sl":{
+    "edit-transaction": "Uredi transakcijo",
+    "delete-transaction": "Izbriši transakcijo"
+  },
+  "en":{
+    "edit-transaction": "Edit transaction",
+    "delete-transaction": "Delete transaction"
+  }
+}

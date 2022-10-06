@@ -1,0 +1,14 @@
+{
+  "sl":{
+    "info": "Informacije",
+    "transactions": "Transakcije",
+    "add-funds-to-budget": "Položi sredstva na proračun",
+    "withdraw-funds-from-budget": "Dvigni sredstva iz proračuna"
+  },
+  "en":{
+    "info": "Information",
+    "transactions": "Transactions",
+    "add-funds-to-budget": "Add funds to budget",
+    "withdraw-fund-from-budget": "Withdraw funds from budget"
+  }
+}

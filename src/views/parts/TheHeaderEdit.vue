@@ -2,8 +2,9 @@
 import closeIcon from '@/assets/icons/close.svg';
 import router from '@/router';
 import AppPopup from '@/components/AppPopup.vue';
-import { reactive } from 'vue';
+import { onUnmounted, reactive } from 'vue';
 import AppButton from '@/components/AppButton.vue';
+import ContentContainer from '../parts/ContentContainer.vue';
 import messages from './TheHeaderEdit.i18n.json';
 import { useI18n } from 'vue-i18n';
 import { useUserStore } from '@/stores/user';
@@ -19,9 +20,11 @@ defineProps({
   },
 });
 
+
 const popupState = reactive({
   isDisplayed: false,
 });
+
 
 function openClosePopup() {
   popupState.isDisplayed = true;
@@ -39,11 +42,11 @@ function closeView() {
 
 <template>
   <AppPopup :isOpen="popupState.isDisplayed">
-    <div style="width: 600px;">
+    <ContentContainer>
       <h1 style="text-align: center;">{{closeText}}</h1>
-      <AppButton style="margin-top:20px;" @click="closeView">{{t('yes')}}</AppButton>
-      <AppButton style="margin-top:20px;" @click="closeClosePopup" styleType="empty">{{t('no')}}</AppButton>
-    </div>
+      <AppButton @click="closeView">{{t('yes')}}</AppButton>
+      <AppButton @click="closeClosePopup" styleType="empty">{{t('no')}}</AppButton>
+    </ContentContainer>
   </AppPopup>
 
   <div id="header-edit">
@@ -64,8 +67,10 @@ function closeView() {
 
 #header-back-button {
   width: fit-content;
-  padding: 40px 30px;
+  padding: 0px 30px;
+  min-height: 107px;
   display: flex;
   cursor: pointer;
+  align-items: center;
 }
 </style>

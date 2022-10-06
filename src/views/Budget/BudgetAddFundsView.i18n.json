@@ -1,0 +1,28 @@
+{
+  "sl":{
+    "adding-funds-to-budget": "Polag sredstev na proračun",
+    "are-you-sure": "Ste prepričani, da želite prekiniti polog sredstev?",
+    "info-about-new-transaction": "Informacije o pologu",
+    "transaction-timestamp": "Datum pologa",
+    "description": "Opis pologa",
+    "amount": "Znesek pologa",
+    "add-funds": "Položi sredstva",
+    "funds-added": "Sredstva uspešno položena",
+    "open-budget": "Odpri proračun",
+    "funds-adding-failed": "Tehnična napaka! Polog sredstev ni uspel.",
+    "try-again": "Poskusi ponovno"
+  },
+  "en":{
+    "adding-funds-to-budget": "Polaganje sredstev na proračun",
+    "are-you-sure": "Ste prepričani, da želite prekiniti dodajanje sredstev?",
+    "info-about-new-transaction": "Informacije o pologu",
+    "transaction-timestamp": "Datum pologa",
+    "description": "Opis pologa",
+    "amount": "Znesek pologa",
+    "add-funds": "Položi sredstva",
+    "funds-added": "Sredstva uspešno položena",
+    "open-budget": "Odpri proračun",
+    "funds-adding-failed": "Tehnična napaka! Polog sredstev ni uspel.",
+    "try-again": "Poskusi ponovno"
+  }
+}

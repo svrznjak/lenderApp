@@ -6,6 +6,16 @@ import type { MenuLink } from '@/types/MenuLink.js'
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 import AppButton from '@/components/AppButton.vue';
+import { useI18n } from 'vue-i18n';
+import { useUserStore } from "@/stores/user";
+import messages from './TheMenuMobile.i18n.json';
+const { t, locale } = useI18n({
+  messages
+});
+
+const { user } = useUserStore()
+locale.value = user.language;
+
 const props = defineProps({
   newButtonText: {
     type: String,
@@ -22,13 +32,13 @@ const router = useRouter()
 const currentRouteName = router.currentRoute.value.name?.toString();
 
 const menuLinks: MenuLink[] = [{
-  id: 0, text: "Budgets", routeName: "budgets"
+  id: 0, text: t("budgets"), routeName: "budgets"
 }, {
-  id: 1, text: "Loans", routeName: "loans"
+  id: 1, text: t("loans"), routeName: "loans"
 }, {
-  id: 2, text: "Analytics", routeName: "analytics"
+  id: 2, text: t("analytics"), routeName: "analytics"
 }, {
-  id: 3, text: "My Profile", routeName: "my-profile"
+  id: 3, text: t("my-profile"), routeName: "my-profile"
 }];
 
 const isMenuOpen = ref(false);
@@ -47,6 +57,9 @@ function openNew() {
 </script>
 
 <template id="menu-mobile">
+  <Transition name="fade">
+    <div id="background-dim" v-show="isMenuOpen" @click="toggleMenu"></div>
+  </Transition>
   <div id="static-bottom-menu">
     <div class="devider"></div>
     <div class="add-new" :class="{ clicked: isClicked }" @click="openNew"><img :src="plusIcon" alt="+"
@@ -63,11 +76,11 @@ function openNew() {
 
 <style scoped>
 #static-bottom-menu {
-  position: fixed;
+  position: relative;
   width: 100%;
   left: 0px;
   bottom: 0px;
-  z-index: 9801;
+  z-index: 7801;
   color: #fff;
   height: 60px;
   background-color: var(--primaryColor);
@@ -115,8 +128,8 @@ function openNew() {
   position: fixed;
   width: 100%;
   left: 0px;
-  bottom: 60px;
-  z-index: 9800;
+  bottom: 58px;
+  z-index: 7800;
   transition: all 0.6s;
   transform: translate(0px, 100%);
   color: #fff;
@@ -145,6 +158,27 @@ function openNew() {
   width: calc(100% - 40px);
   margin: auto;
   background-color: #4470A1;
+}
+
+#background-dim {
+  position: fixed;
+  z-index: 7500;
+  bottom: 0px;
+  left: 0px;
+  height: 100%;
+  width: 100%;
+  background-color: #000;
+  opacity: 0.3;
+}
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.3s;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0 !important;
 }
 
 /*@media only screen and (min-width: 769px)  {

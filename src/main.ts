@@ -44,6 +44,7 @@ const user = await new Promise((resolve) => {
     }
   });
 });
+
 const i18n = createI18n({
   legacy: false, // you must set `false`, to use Composition API
   locale: "en", // set locale
@@ -54,6 +55,26 @@ const i18n = createI18n({
     // global translations
     sl: {
       app_name: "Lender App",
+    },
+  },
+  numberFormats: {
+    en: {
+      currency: {
+        style: "currency",
+        currency: "USD",
+      },
+    },
+    "lv-LV": {
+      currency: {
+        style: "currency",
+        currency: "eur",
+      },
+    },
+    sl: {
+      currency: {
+        style: "currency",
+        currency: "EUR",
+      },
     },
   },
 });
