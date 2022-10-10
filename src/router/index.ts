@@ -14,6 +14,7 @@ import { useUserStore } from "@/stores/user";
 const router = createRouter({
   history: createWebHistory(),
   routes: [
+    { path: "", redirect: "/login" },
     {
       path: "/login",
       name: "login",
@@ -60,7 +61,7 @@ const router = createRouter({
       name: "budget",
       component: BudgetSingleView,
       props: true,
-      meta: { requiresAuth: true, toTop: true },
+      meta: { requiresAuth: true },
     },
     {
       path: "/budgets/:id/edit",
@@ -111,6 +112,13 @@ const router = createRouter({
       meta: { requiresAuth: true },
     },
     {
+      path: "/loans/:id/add-manual-interest",
+      name: "loanAddManualInterest",
+      props: true,
+      component: () => import("@/views/Loan/LoanAddManualInterestView.vue"),
+      meta: { requiresAuth: true },
+    },
+    {
       path: "/loans/:id/edit",
       name: "loanEdit",
       props: true,
@@ -138,7 +146,7 @@ const router = createRouter({
     },
   ],
   scrollBehavior(to): any {
-    const scroll = { behavior: "" };
+    const scroll: any = {};
     //if (to.meta.toTop) scroll.top = 0;
     if (to.meta.smoothScroll) scroll.behavior = "smooth";
     return scroll;
@@ -171,6 +179,8 @@ function generateTransitionName(from: RouteLocationNormalized, to: RouteLocation
   if (from.name === "loan" && to.name === "loans") return "slide-right";
   if (from.name === "loan" && to.name === "loanAddPayment") return "slide-up";
   if (from.name === "loanAddPayment" && to.name === "loan") return "slide-down";
+  if (from.name === "loan" && to.name === "loanAddManualInterest") return "slide-up";
+  if (from.name === "loanAddManualInterest" && to.name === "loan") return "slide-down";
   return "fade";
 }
 

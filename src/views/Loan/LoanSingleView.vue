@@ -86,6 +86,8 @@ function setDisplayedScreen(newValue: displayedScreenType): void {
         <div id="loan-transaction" class="local-container" v-if="displayedScreen==='loan-transactions'">
           <AppButton @click="router.push({name: 'loanAddPayment', params:{id: props.id}})">
             {{t('add-loan-payment')}}</AppButton>
+          <AppButton @click="router.push({name: 'loanAddManualInterest', params:{id: props.id}})">
+            {{t('add-manual-interest')}}</AppButton>
           <TransactionsList />
         </div>
       </ContentContainer>

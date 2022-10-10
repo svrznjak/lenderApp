@@ -181,6 +181,41 @@ export const useLoanStore = defineStore("LoanStore", {
       }
       return updatedLoan;
     },
+    async addManualInterestRate({
+      loanId,
+      description,
+      transactionTimestamp,
+      amount,
+    }: {
+      loanId: string;
+      description: string;
+      transactionTimestamp: number;
+      amount: number;
+    }): Promise<ILoan> {
+      const variables = {
+        loanId,
+        description,
+        transactionTimestamp,
+        amount,
+      };
+      const query = gql`
+        mutation ($loanId: ID!, $description: String!, $transactionTimestamp: Float!, $amount: Float!) {
+          Loan {
+            addManualInterest(
+              loanId: $loanId
+              description: $description
+              transactionTimestamp: $transactionTimestamp
+              amount: $amount
+            ) {
+              _id
+            }
+          }
+        }
+      `;
+      const newTransaction = (await requestBackend({ gql: query, variables })).Loan.addManualInterest;
+      console.log(newTransaction);
+      return newTransaction;
+    },
     getLoanById(loanId: string) {
       return this.loans.find((loan) => loanId === loan._id);
     },
