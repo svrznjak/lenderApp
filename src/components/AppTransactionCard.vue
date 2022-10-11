@@ -32,6 +32,9 @@ const props = defineProps({
     type: String,
     required: true,
   },
+  from: {
+    type: String,
+  },
   additionalDescription: {
     type: String,
   },

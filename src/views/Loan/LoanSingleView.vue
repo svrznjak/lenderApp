@@ -88,7 +88,7 @@ function setDisplayedScreen(newValue: displayedScreenType): void {
             {{t('add-loan-payment')}}</AppButton>
           <AppButton @click="router.push({name: 'loanAddManualInterest', params:{id: props.id}})">
             {{t('add-manual-interest')}}</AppButton>
-          <TransactionsList />
+          <TransactionsList displayAs="loan-transactions" />
         </div>
       </ContentContainer>
     </ScrollArea>
