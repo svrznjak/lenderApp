@@ -26,11 +26,9 @@ const props = defineProps({
     required: true,
   },
 });
-const currentBudget = ref(budgetStore.getBudgetById(props.id));
 onMounted(async () => {
   //await budgetStore.syncBudget({ budgetId: props.id });
   await budgetStore.syncBudgets();
-  currentBudget.value = budgetStore.getBudgetById(props.id);
 });
 
 type displayedScreenType = 'budget-info' | 'budget-transactions'
@@ -100,7 +98,7 @@ async function archiveBudget() {
   popupState.isArchivePrompt = false;
   popupState.isLoading = true;
   try {
-    await budgetStore.archiveBudget({ budgetId: currentBudget.value!._id });
+    await budgetStore.archiveBudget({ budgetId: budgetStore.budgets[props.id]._id });
     popupState.isLoading = false;
     popupState.isArchivePrompt = false;
     popupState.isArchivedSuccess = true;
@@ -116,7 +114,7 @@ async function unarchiveBudget() {
   popupState.isUnarchivePrompt = false;
   popupState.isLoading = true;
   try {
-    await budgetStore.unarchiveBudget({ budgetId: currentBudget.value!._id });
+    await budgetStore.unarchiveBudget({ budgetId: budgetStore.budgets[props.id]._id });
     popupState.isLoading = false;
     popupState.isUnarchivePrompt = false;
     popupState.isUnarchivedSuccess = true;
@@ -136,9 +134,9 @@ function closePopup() {
 
 <template>
   <main>
-    <TheHeaderDetails @click="router.back()">{{ currentBudget?.name || '' }}</TheHeaderDetails>
+    <TheHeaderDetails @click="router.back()">{{ budgetStore.budgets[props.id]?.name || '' }}</TheHeaderDetails>
     <ScrollArea>
-      <ContentContainer v-if="currentBudget !== undefined">
+      <ContentContainer v-if="budgetStore.budgets[props.id] !== undefined">
         <div>
           <AppButton class="custom-button" @click="setDisplayedScreen('budget-info')"
             style="width:50%; margin:0; border-radius: 5px 0 0 5px;" :styleType="budgetInfoButtonStyle"
@@ -152,12 +150,14 @@ function closePopup() {
         </div>
         <div id="budget-info" class="local-container" v-show="displayedScreen==='budget-info'">
           <ContentContainer>
-            <p>{{currentBudget.description}}</p>
+            <p>{{budgetStore.budgets[props.id].description}}</p>
 
             <AppButton styleType="empty">{{t('edit-budget')}}</AppButton>
-            <AppButton v-if="!currentBudget.isArchived" @click="openArchivePromptPopup" styleType="clean">
+            <AppButton v-if="!budgetStore.budgets[props.id].isArchived" @click="openArchivePromptPopup"
+              styleType="clean">
               {{t('archive-budget')}}</AppButton>
-            <AppButton v-else-if="currentBudget.isArchived" @click="openUnarchivePromptPopup" styleType="clean">
+            <AppButton v-else-if="budgetStore.budgets[props.id].isArchived" @click="openUnarchivePromptPopup"
+              styleType="clean">
               {{t('unarchive-budget')}}</AppButton>
           </ContentContainer>
 

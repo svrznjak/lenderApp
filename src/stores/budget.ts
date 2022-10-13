@@ -4,8 +4,12 @@ import { gql } from "graphql-request";
 import requestBackend from "./helpers/requestBackend";
 import { IInterestRate } from "@/types/interestRateInterface";
 
+interface IBudgets {
+  [key: string]: IBudget;
+}
+
 export const useBudgetStore = defineStore("BudgetStore", {
-  state: () => ({ budgets: [] as IBudget[], isFetching: false as boolean }),
+  state: () => ({ budgets: {} as IBudgets, isFetching: false as boolean }),
   actions: {
     async syncBudget(variables: { budgetId: string }) {
       const query = gql`
@@ -32,10 +36,7 @@ export const useBudgetStore = defineStore("BudgetStore", {
       try {
         this.isFetching = true;
         const budget = (await requestBackend({ gql: query, variables })).Budget.budget;
-
-        const budgetIndexInState = this.budgets.findIndex((stateBudget) => stateBudget._id === budget._id);
-        if (budgetIndexInState > -1) this.budgets[budgetIndexInState] = budget;
-        else this.budgets.push(budget);
+        this.budgets[budget._id] = budget;
 
         this.isFetching = false;
       } catch (err: any) {
@@ -67,7 +68,10 @@ export const useBudgetStore = defineStore("BudgetStore", {
       `;
       try {
         this.isFetching = true;
-        this.budgets = (await requestBackend({ gql: query })).Budget.budgets;
+        const budgets: IBudget[] = (await requestBackend({ gql: query })).Budget.budgets;
+        budgets.forEach((budget) => {
+          this.budgets[budget._id] = budget;
+        });
         this.isFetching = false;
       } catch (err: any) {
         console.log(err);
@@ -145,7 +149,7 @@ export const useBudgetStore = defineStore("BudgetStore", {
         }
       `;
       const createdBudget = (await requestBackend({ gql: query, variables })).Budget.createBudget;
-      this.budgets.push(createdBudget);
+      this.budgets[createdBudget._id] = createdBudget;
       return createdBudget;
     },
     async addFundsToBudget({
@@ -193,11 +197,7 @@ export const useBudgetStore = defineStore("BudgetStore", {
       `;
       const updatedBudget = (await requestBackend({ gql: query, variables })).Budget.addFundsToBudget;
       console.log(updatedBudget);
-      for (let i = 0; i < this.budgets.length; i++) {
-        if (this.budgets[i]._id === updatedBudget._id) {
-          this.budgets[i] = updatedBudget;
-        }
-      }
+      this.budgets[updatedBudget._id] = updatedBudget;
       return updatedBudget;
     },
     async withdrawFundsFromBudget({
@@ -246,11 +246,8 @@ export const useBudgetStore = defineStore("BudgetStore", {
       `;
       const updatedBudget = (await requestBackend({ gql: query, variables })).Budget.withdrawFundsFromBudget;
       console.log(updatedBudget);
-      for (let i = 0; i < this.budgets.length; i++) {
-        if (this.budgets[i]._id === updatedBudget._id) {
-          this.budgets[i] = updatedBudget;
-        }
-      }
+      this.budgets[updatedBudget._id] = updatedBudget;
+
       return updatedBudget;
     },
     async archiveBudget({ budgetId }: { budgetId: string }): Promise<IBudget> {
@@ -281,7 +278,7 @@ export const useBudgetStore = defineStore("BudgetStore", {
       `;
       const updatedBudget = (await requestBackend({ gql: query, variables })).Budget.archiveBudget;
       console.log(updatedBudget);
-      this.budgets[this.budgets.findIndex((budget) => budget._id === updatedBudget._id)] = updatedBudget;
+      this.budgets[updatedBudget._id] = updatedBudget;
       return updatedBudget;
     },
     async unarchiveBudget({ budgetId }: { budgetId: string }): Promise<IBudget> {
@@ -312,7 +309,7 @@ export const useBudgetStore = defineStore("BudgetStore", {
       `;
       const updatedBudget = (await requestBackend({ gql: query, variables })).Budget.unarchiveBudget;
       console.log(updatedBudget);
-      this.budgets[this.budgets.findIndex((budget) => budget._id === updatedBudget._id)] = updatedBudget;
+      this.budgets[updatedBudget._id] = updatedBudget;
       return updatedBudget;
     },
     getBudgetById(budgetId: string) {

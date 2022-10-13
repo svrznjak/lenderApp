@@ -214,7 +214,7 @@ function openSelectFundsPopup() {
           <h2>{{t('select-funds-for-this-loan')}}</h2>
 
           <AppCard v-for="fund in form.funds" :key="fund.budgetId">
-            <h2>{{ budgetStore.getBudgetById(fund.budgetId)!.name}}</h2>
+            <h2>{{ budgetStore.budgets[fund.budgetId].name}}</h2>
             <div style="margin-top:10px; display:flex;">
               <h4 style="padding: 3px 5px 0px 0px;">Selected funds:</h4>
               <h3>
@@ -225,7 +225,7 @@ function openSelectFundsPopup() {
             <div style="margin-top:10px; display:flex;">
               <h4 style="padding: 3px 5px 0px 0px;">Avaiable funds:</h4>
               <h3>
-                <AppCurrencyNumber :amount="budgetStore.getBudgetById(fund.budgetId)!.calculatedTotalAvailableAmount"
+                <AppCurrencyNumber :amount="budgetStore.budgets[fund.budgetId].calculatedTotalAvailableAmount"
                   :currency="userStore.user!.currency" :locale="userStore.user!.language" />
               </h3>
             </div>

@@ -114,7 +114,7 @@ function closePopup() {
           </AppButton>
           <p>{{t('budget-to-pay-to')}}</p>
           <AppCard v-if="form.selectedBudgetId.length !== 0">
-            <h2>{{ budgetStore.getBudgetById(form.selectedBudgetId)!.name}}</h2>
+            <h2>{{ budgetStore.budgets[form.selectedBudgetId].name}}</h2>
           </AppCard>
           <AppButton v-show="form.selectedBudgetId.length !== 0" styleType="empty" @click.prevent="openSelectBudget">
             {{t('select-different-budget')}}
