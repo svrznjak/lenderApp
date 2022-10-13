@@ -35,24 +35,24 @@ onMounted(async () => await budgetStore.syncBudgets())
           v-for="budget in budgetStore.budgets" :key="budget._id">
           <h2>{{ budget.name}}</h2>
           <div style="margin-top:20px; display:flex;">
-            <h4 style="padding: 3px 5px 0px 0px;">{{t('total')}}:</h4>
+            <h4 style="padding: 3px 5px 0px 0px;">{{t('invested')}}:</h4>
             <h3>
-              <AppCurrencyNumber :amount="budget.calculatedTotalAmount" :currency="user!.currency"
+              <AppCurrencyNumber :amount="budget.calculatedTotalInvestedAmount" :currency="user!.currency"
                 :locale="user!.language" />
             </h3>
           </div>
           <div style="margin-top:10px; display:flex;">
-            <h4 style="padding: 3px 5px 0px 0px;">{{t('lended')}}:</h4>
+            <h4 style="padding: 3px 5px 0px 0px;">{{t('withdrawn')}}:</h4>
             <h3>
-              <AppCurrencyNumber :amount="budget.calculatedLendedAmount" :currency="user!.currency"
+              <AppCurrencyNumber :amount="budget.calculatedTotalWithdrawnAmount" :currency="user!.currency"
                 :locale="user!.language" />
             </h3>
           </div>
           <div style="margin-top:10px; display:flex;">
             <h4 style="padding: 3px 5px 0px 0px;">{{t('avaiable')}}:</h4>
             <h3>
-              <AppCurrencyNumber :amount="budget.calculatedTotalAmount - budget.calculatedLendedAmount"
-                :currency="user!.currency" :locale="user!.language" />
+              <AppCurrencyNumber :amount="budget.calculatedTotalAvailableAmount" :currency="user!.currency"
+                :locale="user!.language" />
             </h3>
           </div>
         </AppCard>

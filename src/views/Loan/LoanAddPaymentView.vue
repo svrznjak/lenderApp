@@ -15,6 +15,7 @@ import { useI18n } from 'vue-i18n';
 import ScrollArea from '../parts/ScrollArea.vue';
 import { useBudgetStore } from '@/stores/budget';
 import { useLoanStore } from '@/stores/loan';
+import dateToString from '@/helpers/dateToString';
 const { t, locale } = useI18n({
   messages
 });
@@ -33,9 +34,8 @@ onMounted(async () => {
   await budgetStore.syncBudgets();
 });
 
-const now = new Date();
 const form = reactive({
-  transactionTimestramp: `${now.getFullYear()}-0${now.getUTCMonth() + 1}-${now.getDate()}`,
+  transactionTimestramp: dateToString(new Date()),
   selectedBudgetId: '',
   description: '',
   amount: 0,
@@ -106,7 +106,7 @@ function closePopup() {
         <VeeForm @submit="submitPayment">
           <h2>{{t('info-about-new-transaction')}}</h2>
           <AppFormField name="transaction-timestamp" :label="t('transaction-timestamp')"
-            v-model="form.transactionTimestramp" type="date" rules="required" />
+            v-model="form.transactionTimestramp" type="datetime-local" rules="required" />
           <AppFormField as="textarea" name="description" :label="t('description')" v-model="form.description"
             type="text" rules="required" />
           <AppButton v-show="form.selectedBudgetId.length === 0" @click.prevent="openSelectBudget">
@@ -138,7 +138,7 @@ function closePopup() {
               <div style="margin-top:10px; display:flex;">
                 <h4 style="padding: 3px 5px 0px 0px;">Avaiable:</h4>
                 <h3>
-                  <AppCurrencyNumber :amount="budget.calculatedTotalAmount - budget.calculatedLendedAmount"
+                  <AppCurrencyNumber :amount="budget.calculatedTotalAvailableAmount"
                     :currency="userStore.user!.currency" :locale="userStore.user!.language" />
                 </h3>
               </div>

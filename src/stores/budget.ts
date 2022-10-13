@@ -21,8 +21,9 @@ export const useBudgetStore = defineStore("BudgetStore", {
                 amount
                 entryTimestamp
               }
-              calculatedTotalAmount
-              calculatedLendedAmount
+              calculatedTotalInvestedAmount
+              calculatedTotalWithdrawnAmount
+              calculatedTotalAvailableAmount
             }
           }
         }
@@ -55,8 +56,9 @@ export const useBudgetStore = defineStore("BudgetStore", {
                 amount
                 entryTimestamp
               }
-              calculatedTotalAmount
-              calculatedLendedAmount
+              calculatedTotalInvestedAmount
+              calculatedTotalWithdrawnAmount
+              calculatedTotalAvailableAmount
             }
           }
         }
@@ -132,8 +134,9 @@ export const useBudgetStore = defineStore("BudgetStore", {
                 isCompounding
                 entryTimestamp
               }
-              calculatedTotalAmount
-              calculatedLendedAmount
+              calculatedTotalInvestedAmount
+              calculatedTotalWithdrawnAmount
+              calculatedTotalAvailableAmount
             }
           }
         }
@@ -177,8 +180,9 @@ export const useBudgetStore = defineStore("BudgetStore", {
                 amount
                 entryTimestamp
               }
-              calculatedTotalAmount
-              calculatedLendedAmount
+              calculatedTotalInvestedAmount
+              calculatedTotalWithdrawnAmount
+              calculatedTotalAvailableAmount
             }
           }
         }
@@ -228,8 +232,9 @@ export const useBudgetStore = defineStore("BudgetStore", {
                 amount
                 entryTimestamp
               }
-              calculatedTotalAmount
-              calculatedLendedAmount
+              calculatedTotalInvestedAmount
+              calculatedTotalWithdrawnAmount
+              calculatedTotalAvailableAmount
             }
           }
         }

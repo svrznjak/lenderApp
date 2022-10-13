@@ -91,14 +91,15 @@ input,select,textarea{
   }
 }
 input[type="date"]::-webkit-inner-spin-button,
-input[type="date"]::-webkit-calendar-picker-indicator {
+input[type="date"]::-webkit-calendar-picker-indicator, input[type="datetime-local"]::-webkit-inner-spin-button,
+input[type="datetime-local"]::-webkit-calendar-picker-indicator {
     opacity: 0;
 }
 input::-webkit-date-and-time-value {
   text-align: left;
 }
 
-input[type="date"]{
+input[type="date"], input[type="datetime-local"]{
   background-image: url(@/assets/icons/calendar.svg);
   background-repeat: no-repeat;
   background-position: right 15px center;

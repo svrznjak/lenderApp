@@ -196,7 +196,7 @@ function openSelectFundsPopup() {
           <AppFormField as="textarea" name="description" :label="t('description')" v-model="form.description"
             type="text" rules="required" />
           <h2>{{t('loan-timeframe')}}</h2>
-          <AppFormField name="opened-date" :label="t('loan-start-date')" v-model="form.openedDate" type="date"
+          <AppFormField name="opened-date" :label="t('loan-start-date')" v-model="form.openedDate" type="datetime-local"
             rules="required" />
           <AppFormField as="select" name="loan-duration-type" :label="t('loan-duration-type')"
             v-model="form.loanDurationType" rules="required">
@@ -210,7 +210,7 @@ function openSelectFundsPopup() {
             v-model.number="form.loanDuration" type="number" rules="required|min_value:0|max_value:1000000" />
           <AppInfoBadge v-if="form.loanDurationType !=='PICK_DATE'">Loan will end on {{form.closesDate}}</AppInfoBadge>
           <AppFormField v-if="form.loanDurationType ==='PICK_DATE'" name="closes-date" :label="t('loan-end-date')"
-            v-model="form.closesDate" type="date" rules="required" />
+            v-model="form.closesDate" type="datetime-local" rules="required" />
           <h2>{{t('select-funds-for-this-loan')}}</h2>
 
           <AppCard v-for="fund in form.funds" :key="fund.budgetId">
@@ -225,8 +225,7 @@ function openSelectFundsPopup() {
             <div style="margin-top:10px; display:flex;">
               <h4 style="padding: 3px 5px 0px 0px;">Avaiable funds:</h4>
               <h3>
-                <AppCurrencyNumber
-                  :amount="budgetStore.getBudgetById(fund.budgetId)!.calculatedTotalAmount - budgetStore.getBudgetById(fund.budgetId)!.calculatedLendedAmount"
+                <AppCurrencyNumber :amount="budgetStore.getBudgetById(fund.budgetId)!.calculatedTotalAvailableAmount"
                   :currency="userStore.user!.currency" :locale="userStore.user!.language" />
               </h3>
             </div>
@@ -288,7 +287,7 @@ function openSelectFundsPopup() {
               <div style="margin-top:10px; display:flex;">
                 <h4 style="padding: 3px 5px 0px 0px;">Avaiable:</h4>
                 <h3>
-                  <AppCurrencyNumber :amount="budget.calculatedTotalAmount - budget.calculatedLendedAmount"
+                  <AppCurrencyNumber :amount="budget.calculatedTotalAvailableAmount"
                     :currency="userStore.user!.currency" :locale="userStore.user!.language" />
                 </h3>
               </div>

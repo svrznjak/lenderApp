@@ -14,6 +14,7 @@ import { useI18n } from 'vue-i18n';
 import ScrollArea from '../parts/ScrollArea.vue';
 import { useBudgetStore } from '@/stores/budget';
 import { useLoanStore } from '@/stores/loan';
+import dateToString from '@/helpers/dateToString';
 const { t, locale } = useI18n({
   messages
 });
@@ -27,9 +28,8 @@ const userStore = useUserStore();
 const loanStore = useLoanStore();
 locale.value = userStore.user!.language;
 
-const now = new Date();
 const form = reactive({
-  transactionTimestramp: `${now.getFullYear()}-0${now.getUTCMonth() + 1}-${now.getDate()}`,
+  transactionTimestramp: dateToString(new Date()),
   description: '',
   amount: 0,
 })
@@ -92,7 +92,7 @@ function closePopup() {
         <VeeForm @submit="submitPayment">
           <h2>{{t('info-about-new-transaction')}}</h2>
           <AppFormField name="transaction-timestamp" :label="t('transaction-timestamp')"
-            v-model="form.transactionTimestramp" type="date" rules="required" />
+            v-model="form.transactionTimestramp" type="datetime-local" rules="required" />
           <AppFormField name="description" :label="t('description')" v-model="form.description" type="text"
             rules="required" />
           <AppFormField name="amount" :label="t('amount')" v-model.number="form.amount" type="number"

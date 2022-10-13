@@ -2,16 +2,16 @@
   "sl":{
     "budgets": "Proračuni",
     "new-budget": "Nov proračun",
-    "total": "Skupaj",
-    "lended": "Posojeno",
+    "invested": "Položeno",
+    "withdrawn": "Dvignjeno",
     "avaiable": "Na voljo"
 
   },
   "en":{
     "budgets": "Budgets",
     "new-budget": "New budget",
-    "total": "Total",
-    "lended": "Lended",
+    "invested": "Invested",
+    "withdrawn": "Withdrawn",
     "avaiable": "Avaiable"
   }
 }

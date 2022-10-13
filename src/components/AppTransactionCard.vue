@@ -57,7 +57,7 @@ const props = defineProps({
 })
 locale.value = props.locale;
 
-const date = computed(() => new Date(props.dateTimestamp).toLocaleDateString());
+const date = computed(() => new Date(props.dateTimestamp).toLocaleString([], { year: 'numeric', month: 'numeric', day: 'numeric', hour: '2-digit', minute: '2-digit' }));
 
 const isPopupDisplayed = ref(false);
 function openPopup() {

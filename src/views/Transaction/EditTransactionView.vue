@@ -97,7 +97,7 @@ function closePopup() {
         <VeeForm @submit="submitUpdate">
           <h2>{{t('info-about-transaction')}}</h2>
           <AppFormField name="transaction-timestamp" :label="t('transaction-timestamp')"
-            v-model="form.transactionTimestramp" type="date" rules="required" />
+            v-model="form.transactionTimestramp" type="datetime-local" rules="required" />
           <AppFormField as="textarea" name="description" :label="t('description')" v-model="form.description"
             type="text" rules="required" />
           <AppFormField name="amount" :label="t('amount')" v-model.number="form.amount" type="number"
