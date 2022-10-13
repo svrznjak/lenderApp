@@ -24,8 +24,9 @@ const props = defineProps({
 .info-badge {
   border-radius: 5px;
   font-weight: 500;
-  padding: 10px;
+  padding: 5px 10px;
   text-align: center;
+  width: fit-content;
 }
 
 .full-width {
@@ -35,5 +36,10 @@ const props = defineProps({
 .blue {
   background-color: #E1E5F2;
   color: #1826A3;
+}
+
+.yellow {
+  background-color: #FF8A1E;
+  color: #FFFFFF;
 }
 </style>

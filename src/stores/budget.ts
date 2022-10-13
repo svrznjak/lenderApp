@@ -315,6 +315,23 @@ export const useBudgetStore = defineStore("BudgetStore", {
     getBudgetById(budgetId: string) {
       return this.budgets.find((budget) => budgetId === budget._id);
     },
+    getArchivedBudgets(): IBudget[] {
+      console.log(
+        Object.entries(this.budgets)
+          .map((entry) => entry[1])
+          .find((budget) => budget.isArchived)
+      );
+      const archivedBudgets = Object.entries(this.budgets)
+        .map((entry) => entry[1])
+        .filter((budget) => budget.isArchived);
+      return archivedBudgets;
+    },
+    getUnarchivedBudgets(): IBudget[] {
+      const archivedBudgets = Object.entries(this.budgets)
+        .map((entry) => entry[1])
+        .filter((budget) => !budget.isArchived);
+      return archivedBudgets;
+    },
   },
   getters: {},
 });

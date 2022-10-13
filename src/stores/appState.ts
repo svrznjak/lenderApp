@@ -1,7 +1,10 @@
 import { acceptHMRUpdate, defineStore } from "pinia";
 
 export const useAppStateStore = defineStore("AppStateStore", {
-  state: () => ({ scrollTopMemory: {} as scrollTopMemory }),
+  state: () => ({
+    scrollTopMemory: {} as scrollTopMemory,
+    budgetsViewState: { searchFieldText: "", hideArcived: true },
+  }),
   actions: {
     saveScrollTop(url: string, scrollTop: number) {
       this.scrollTopMemory[url] = scrollTop;
