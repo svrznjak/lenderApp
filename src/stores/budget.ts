@@ -21,6 +21,7 @@ export const useBudgetStore = defineStore("BudgetStore", {
                 amount
                 entryTimestamp
               }
+              isArchived
               calculatedTotalInvestedAmount
               calculatedTotalWithdrawnAmount
               calculatedTotalAvailableAmount
@@ -56,6 +57,7 @@ export const useBudgetStore = defineStore("BudgetStore", {
                 amount
                 entryTimestamp
               }
+              isArchived
               calculatedTotalInvestedAmount
               calculatedTotalWithdrawnAmount
               calculatedTotalAvailableAmount
@@ -134,6 +136,7 @@ export const useBudgetStore = defineStore("BudgetStore", {
                 isCompounding
                 entryTimestamp
               }
+              isArchived
               calculatedTotalInvestedAmount
               calculatedTotalWithdrawnAmount
               calculatedTotalAvailableAmount
@@ -180,6 +183,7 @@ export const useBudgetStore = defineStore("BudgetStore", {
                 amount
                 entryTimestamp
               }
+              isArchived
               calculatedTotalInvestedAmount
               calculatedTotalWithdrawnAmount
               calculatedTotalAvailableAmount
@@ -232,6 +236,7 @@ export const useBudgetStore = defineStore("BudgetStore", {
                 amount
                 entryTimestamp
               }
+              isArchived
               calculatedTotalInvestedAmount
               calculatedTotalWithdrawnAmount
               calculatedTotalAvailableAmount
@@ -246,6 +251,68 @@ export const useBudgetStore = defineStore("BudgetStore", {
           this.budgets[i] = updatedBudget;
         }
       }
+      return updatedBudget;
+    },
+    async archiveBudget({ budgetId }: { budgetId: string }): Promise<IBudget> {
+      const variables = {
+        budgetId,
+      };
+
+      const query = gql`
+        mutation ($budgetId: ID!) {
+          Budget {
+            archiveBudget(budgetId: $budgetId) {
+              _id
+              name
+              description
+              defaultInterestRate {
+                type
+                duration
+                amount
+                entryTimestamp
+              }
+              isArchived
+              calculatedTotalInvestedAmount
+              calculatedTotalWithdrawnAmount
+              calculatedTotalAvailableAmount
+            }
+          }
+        }
+      `;
+      const updatedBudget = (await requestBackend({ gql: query, variables })).Budget.archiveBudget;
+      console.log(updatedBudget);
+      this.budgets[this.budgets.findIndex((budget) => budget._id === updatedBudget._id)] = updatedBudget;
+      return updatedBudget;
+    },
+    async unarchiveBudget({ budgetId }: { budgetId: string }): Promise<IBudget> {
+      const variables = {
+        budgetId,
+      };
+
+      const query = gql`
+        mutation ($budgetId: ID!) {
+          Budget {
+            unarchiveBudget(budgetId: $budgetId) {
+              _id
+              name
+              description
+              defaultInterestRate {
+                type
+                duration
+                amount
+                entryTimestamp
+              }
+              isArchived
+              calculatedTotalInvestedAmount
+              calculatedTotalWithdrawnAmount
+              calculatedTotalAvailableAmount
+            }
+          }
+        }
+      `;
+      const updatedBudget = (await requestBackend({ gql: query, variables })).Budget.unarchiveBudget;
+      console.log(updatedBudget);
+      this.budgets[this.budgets.findIndex((budget) => budget._id === updatedBudget._id)] = updatedBudget;
       return updatedBudget;
     },
     getBudgetById(budgetId: string) {
