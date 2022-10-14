@@ -12,8 +12,7 @@ import ScrollArea from "../parts/ScrollArea.vue";
 import router from "@/router";
 import { useBudgetStore } from "@/stores/budget";
 import { storeToRefs } from "pinia";
-import { onMounted, ref, useTransitionState } from "vue";
-import AppFormField from "@/components/AppFormField.vue";
+import { onMounted } from "vue";
 import { computed } from "@vue/reactivity";
 import { IBudget } from "@/types/budgetInterface";
 import AppInfoBadge from "../../components/AppInfoBadge.vue";
@@ -120,10 +119,8 @@ const filteredBudgets = computed(() => {
               />
             </h3>
           </div>
-          <div style="margin-top: 20px; display: flex">
-            <AppInfoBadge v-if="budget.isArchived" color="yellow">{{
-              t("archived")
-            }}</AppInfoBadge>
+          <div v-if="budget.isArchived" style="margin-top: 20px; display: flex">
+            <AppInfoBadge color="yellow">{{ t("archived") }}</AppInfoBadge>
           </div>
         </AppCard>
       </ContentContainer>
