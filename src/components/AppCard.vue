@@ -1,21 +1,20 @@
 <script setup lang="ts">
-import rightIcon from '@/assets/icons/right.svg';
+import rightIcon from "@/assets/icons/right.svg";
 const props = defineProps({
   hasArrow: {
     type: Boolean,
     default: false,
   },
-})
-
+});
 </script>
 
-<template >
+<template>
   <div class="card">
-    <div style="width:100%;">
+    <div style="width: 100%">
       <slot></slot>
     </div>
-    <div v-if="props.hasArrow" style="display:flex; align-items: center;">
-      <img style="width: 20px; right: 50px;" :src="rightIcon" alt=">" />
+    <div v-if="props.hasArrow" style="display: flex; align-items: center">
+      <img style="width: 20px; right: 50px" :src="rightIcon" alt=">" />
     </div>
   </div>
 </template>
