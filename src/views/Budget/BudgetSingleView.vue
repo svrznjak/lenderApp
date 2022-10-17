@@ -166,7 +166,8 @@ function closePopup() {
         <div id="budget-transaction" class="local-container" v-if="displayedScreen==='budget-transactions'">
           <AppButton @click="router.push({name: 'budgetAddFunds', params:{id: props.id}})">
             {{t('add-funds-to-budget')}}</AppButton>
-          <AppButton @click="router.push({name: 'budgetWithdrawFunds', params:{id: props.id}})">
+          <AppButton v-if="budgetStore.budgets[props.id].calculatedTotalAvailableAmount > 0"
+            @click="router.push({name: 'budgetWithdrawFunds', params:{id: props.id}})">
             {{t('withdraw-funds-from-budget')}}</AppButton>
           <TransactionsList displayAs="budget-transactions" />
         </div>
