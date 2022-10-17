@@ -152,7 +152,8 @@ function closePopup() {
           <ContentContainer>
             <p>{{budgetStore.budgets[props.id].description}}</p>
 
-            <AppButton styleType="empty">{{t('edit-budget')}}</AppButton>
+            <AppButton @click="router.push({name: 'budgetEdit', params:{id: props.id}})" styleType="empty">
+              {{t('edit-budget')}}</AppButton>
             <AppButton v-if="!budgetStore.budgets[props.id].isArchived" @click="openArchivePromptPopup"
               styleType="clean">
               {{t('archive-budget')}}</AppButton>
