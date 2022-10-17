@@ -5,11 +5,15 @@ const props = defineProps({
     type: Boolean,
     default: false,
   },
+  disabled: {
+    type: Boolean,
+    default: false,
+  }
 });
 </script>
 
 <template>
-  <div class="card">
+  <div class="card" :class="disabled ? 'disabled' : ''">
     <div style="width: 100%">
       <slot></slot>
     </div>
@@ -26,5 +30,9 @@ const props = defineProps({
   background-color: #ffffff;
   border-radius: 5px;
   cursor: pointer;
+}
+
+.card.disabled {
+  cursor: auto;
 }
 </style>
