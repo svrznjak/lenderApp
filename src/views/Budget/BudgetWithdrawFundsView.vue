@@ -28,7 +28,7 @@ locale.value = userStore.user!.language;
 const form = reactive({
   transactionTimestramp: dateToString(new Date()),
   description: '',
-  amount: 0,
+  amount: NaN,
 })
 
 const popupState = reactive({
@@ -88,7 +88,7 @@ function closePopup() {
         <AppFormField as="textarea" name="description" :label="t('description')" v-model="form.description" type="text"
           rules="required" />
         <AppFormField name="amount" :label="t('amount')" v-model.number="form.amount" type="number" min="0"
-          rules="required|min_value:0" />
+          :rules="'required|min_value:0|max_value:'+budgetStore.budgets[props.id].calculatedTotalAvailableAmount" />
         <AppButton type="submit">{{t('withdraw-funds')}}</AppButton>
       </VeeForm>
 
