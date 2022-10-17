@@ -169,6 +169,8 @@ function generateTransitionName(from: RouteLocationNormalized, to: RouteLocation
   if (from.name === "budget" && to.name === "budgets") return "slide-right";
   if (from.name === "budgets" && to.name === "budgetAdd") return "slide-up";
   if (from.name === "budgetAdd" && to.name === "budgets") return "slide-down";
+  if (from.name === "budget" && to.name === "budgetEdit") return "slide-up";
+  if (from.name === "budgetEdit" && to.name === "budget") return "slide-down";
   if (from.name === "budget" && to.name === "budgetAddFunds") return "slide-up";
   if (from.name === "budgetAddFunds" && to.name === "budget") return "slide-down";
   if (from.name === "budget" && to.name === "budgetWithdrawFunds") return "slide-up";
