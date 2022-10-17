@@ -382,7 +382,7 @@ export const useBudgetStore = defineStore("BudgetStore", {
       return updatedBudget;
     },
     getBudgetById(budgetId: string) {
-      return this.budgets.find((budget) => budgetId === budget._id);
+      return this.budgets[budgetId];
     },
     getArchivedBudgets(): IBudget[] {
       console.log(
