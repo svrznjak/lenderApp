@@ -66,57 +66,35 @@ const filteredBudgets = computed(() => {
       <ContentContainer>
         <div>
           <label for="search">{{ t("search-budgets") }}</label>
-          <input
-            name="search"
-            v-model="appStateStore.budgetsViewState.searchFieldText"
-            type="text"
-          />
+          <input name="search" v-model="appStateStore.budgetsViewState.searchFieldText" type="text" />
         </div>
-        <AppButton
-          @click="toggleHideArchived"
-          :styleType="
-            appStateStore.budgetsViewState.hideArcived ? 'empty' : 'regular'
-          "
-          >{{ t("show-archived-budgets") }}</AppButton
-        >
+        <AppButton @click="toggleHideArchived" :styleType="
+          appStateStore.budgetsViewState.hideArcived ? 'empty' : 'regular'
+        ">{{ t("show-archived-budgets") }}</AppButton>
 
-        <AppCard
-          :hasArrow="true"
-          @click="
-            () => router.push({ name: 'budget', params: { id: budget._id } })
-          "
-          v-for="budget in filteredBudgets"
-          :key="budget._id"
-        >
+        <AppCard :hasArrow="true" @click="
+          () => router.push({ name: 'budget', params: { id: budget._id } })
+        " v-for="budget in filteredBudgets" :key="budget._id">
           <h2>{{ budget.name }}</h2>
           <div style="margin-top: 20px; display: flex">
             <h4 style="padding: 3px 5px 0px 0px">{{ t("invested") }}:</h4>
             <h3>
-              <AppCurrencyNumber
-                :amount="budget.calculatedTotalInvestedAmount"
-                :currency="user!.currency"
-                :locale="user!.language"
-              />
+              <AppCurrencyNumber :amount="budget.calculatedTotalInvestedAmount" :currency="user!.currency"
+                :locale="user!.language" />
             </h3>
           </div>
           <div style="margin-top: 10px; display: flex">
             <h4 style="padding: 3px 5px 0px 0px">{{ t("withdrawn") }}:</h4>
             <h3>
-              <AppCurrencyNumber
-                :amount="budget.calculatedTotalWithdrawnAmount"
-                :currency="user!.currency"
-                :locale="user!.language"
-              />
+              <AppCurrencyNumber :amount="budget.calculatedTotalWithdrawnAmount" :currency="user!.currency"
+                :locale="user!.language" />
             </h3>
           </div>
           <div style="margin-top: 10px; display: flex">
             <h4 style="padding: 3px 5px 0px 0px">{{ t("avaiable") }}:</h4>
             <h3>
-              <AppCurrencyNumber
-                :amount="budget.calculatedTotalAvailableAmount"
-                :currency="user!.currency"
-                :locale="user!.language"
-              />
+              <AppCurrencyNumber :amount="budget.calculatedTotalAvailableAmount" :currency="user!.currency"
+                :locale="user!.language" />
             </h3>
           </div>
           <div v-if="budget.isArchived" style="margin-top: 20px; display: flex">
@@ -125,9 +103,6 @@ const filteredBudgets = computed(() => {
         </AppCard>
       </ContentContainer>
     </ScrollArea>
-    <MenuMobile
-      :newButtonText="t('new-budget')"
-      newButtonRouteName="budgetAdd"
-    />
+    <MenuMobile :newButtonText="t('new-budget')" newButtonRouteName="budgetAdd" />
   </main>
 </template>
