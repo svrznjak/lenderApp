@@ -2,7 +2,7 @@
 import TheHeaderEdit from '@/views/parts/TheHeaderEdit.vue';
 import { useUserStore } from '@/stores/user';
 import ContentContainer from '../parts/ContentContainer.vue';
-import { reactive, ref } from 'vue';
+import { reactive } from 'vue';
 import AppFormField from '@/components/AppFormField.vue';
 import AppButton from '@/components/AppButton.vue';
 import AppPopup from '@/components/AppPopup.vue';
@@ -31,7 +31,7 @@ const form = reactive({
   fixedAmount: 0,
   duration: 'YEAR',
   isCompounding: 'NO',
-  initialFunds: 0
+  initialFunds: NaN
 })
 
 const popupState = reactive({
@@ -51,6 +51,9 @@ async function submitBudget() {
   try {
     let amount = 0;
     ((form.typeOfInterestRate === 'PERCENTAGE_PER_DURATION') ? amount = form.percentage : amount = form.fixedAmount);
+    if (isNaN(form.initialFunds)) {
+      form.initialFunds = 0;
+    }
     const data = {
       name: form.name,
       description: form.description,
