@@ -152,6 +152,75 @@ export const useBudgetStore = defineStore("BudgetStore", {
       this.budgets[createdBudget._id] = createdBudget;
       return createdBudget;
     },
+    async editMyBudget({
+      budgetId,
+      name,
+      description,
+      defaultInterestRate,
+    }: {
+      budgetId: string;
+      name: string;
+      description: string;
+      defaultInterestRate: Pick<IInterestRate, "type" | "duration" | "expectedPayments" | "amount" | "isCompounding">;
+    }): Promise<IBudget> {
+      const variables = {
+        budgetId,
+        name,
+        description,
+        type: defaultInterestRate.type,
+        duration: defaultInterestRate.duration,
+        expectedPayments: defaultInterestRate.expectedPayments,
+        amount: defaultInterestRate.amount,
+        isCompounding: defaultInterestRate.isCompounding,
+      };
+
+      const query = gql`
+        mutation (
+          $budgetId: ID!
+          $name: String!
+          $description: String!
+          $type: DurationTypeInput!
+          $duration: DurationInput!
+          $expectedPayments: expectedPaymentsInputType!
+          $amount: Int!
+          $isCompounding: Boolean!
+        ) {
+          Budget {
+            editBudget(
+              budgetId: $budgetId
+              name: $name
+              description: $description
+              defaultInterestRate: {
+                type: $type
+                duration: $duration
+                expectedPayments: $expectedPayments
+                amount: $amount
+                isCompounding: $isCompounding
+              }
+            ) {
+              _id
+              name
+              description
+              defaultInterestRate {
+                type
+                duration
+                expectedPayments
+                amount
+                isCompounding
+                entryTimestamp
+              }
+              isArchived
+              calculatedTotalInvestedAmount
+              calculatedTotalWithdrawnAmount
+              calculatedTotalAvailableAmount
+            }
+          }
+        }
+      `;
+      const editedBudget = (await requestBackend({ gql: query, variables })).Budget.editBudget;
+      this.budgets[editedBudget._id] = editedBudget;
+      return editedBudget;
+    },
     async addFundsToBudget({
       budgetId,
       description,
