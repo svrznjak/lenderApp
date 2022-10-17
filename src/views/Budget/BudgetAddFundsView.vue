@@ -29,7 +29,7 @@ locale.value = userStore.user!.language;
 const form = reactive({
   transactionTimestramp: dateToString(new Date()),
   description: '',
-  amount: 0,
+  amount: NaN,
 })
 
 const popupState = reactive({
@@ -41,7 +41,6 @@ const popupState = reactive({
 });
 
 async function submitBudget() {
-  console.log(form);
   popupState.isDisplayed = true;
   popupState.isLoading = true;
   try {
@@ -51,6 +50,7 @@ async function submitBudget() {
       description: form.description,
       amount: form.amount,
     }
+    console.log(data);
     await budgetStore.addFundsToBudget(data);
     popupState.isLoading = false;
     popupState.isSuccess = true;
@@ -90,7 +90,7 @@ function closePopup() {
           <AppFormField as="textarea" name="description" :label="t('description')" v-model="form.description"
             type="text" rules="required" />
           <AppFormField name="amount" :label="t('amount')" v-model.number="form.amount" type="number"
-            rules="required" />
+            rules="required|min_value:0" min="0" />
           <AppButton type="submit">{{t('add-funds')}}</AppButton>
         </VeeForm>
 
