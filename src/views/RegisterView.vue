@@ -148,7 +148,6 @@ function enterApp() {
 
 <style scoped>
 main {
-  max-width: 600px;
   margin: auto;
 
   & * {
