@@ -247,24 +247,26 @@ export const useBudgetStore = defineStore("BudgetStore", {
               transactionTimestamp: $transactionTimestamp
               amount: $amount
             ) {
-              _id
-              name
-              description
-              defaultInterestRate {
-                type
-                duration
-                amount
-                entryTimestamp
+              affectedBudget {
+                _id
+                name
+                description
+                defaultInterestRate {
+                  type
+                  duration
+                  amount
+                  entryTimestamp
+                }
+                isArchived
+                calculatedTotalInvestedAmount
+                calculatedTotalWithdrawnAmount
+                calculatedTotalAvailableAmount
               }
-              isArchived
-              calculatedTotalInvestedAmount
-              calculatedTotalWithdrawnAmount
-              calculatedTotalAvailableAmount
             }
           }
         }
       `;
-      const updatedBudget = (await requestBackend({ gql: query, variables })).Budget.addFundsToBudget;
+      const updatedBudget = (await requestBackend({ gql: query, variables })).Budget.addFundsToBudget.affectedBudget;
       console.log(updatedBudget);
       this.budgets[updatedBudget._id] = updatedBudget;
       return updatedBudget;
@@ -296,24 +298,27 @@ export const useBudgetStore = defineStore("BudgetStore", {
               transactionTimestamp: $transactionTimestamp
               amount: $amount
             ) {
-              _id
-              name
-              description
-              defaultInterestRate {
-                type
-                duration
-                amount
-                entryTimestamp
+              affectedBudget {
+                _id
+                name
+                description
+                defaultInterestRate {
+                  type
+                  duration
+                  amount
+                  entryTimestamp
+                }
+                isArchived
+                calculatedTotalInvestedAmount
+                calculatedTotalWithdrawnAmount
+                calculatedTotalAvailableAmount
               }
-              isArchived
-              calculatedTotalInvestedAmount
-              calculatedTotalWithdrawnAmount
-              calculatedTotalAvailableAmount
             }
           }
         }
       `;
-      const updatedBudget = (await requestBackend({ gql: query, variables })).Budget.withdrawFundsFromBudget;
+      const updatedBudget = (await requestBackend({ gql: query, variables })).Budget.withdrawFundsFromBudget
+        .affectedBudget;
       console.log(updatedBudget);
       this.budgets[updatedBudget._id] = updatedBudget;
 
