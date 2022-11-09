@@ -14,7 +14,7 @@ import { useI18n } from 'vue-i18n';
 import ScrollArea from '../parts/ScrollArea.vue';
 import { useBudgetStore } from '@/stores/budget';
 import { useLoanStore } from '@/stores/loan';
-import dateToString from '@/helpers/dateToString';
+import { datetimeToString } from '@/helpers/dateToString';
 const { t, locale } = useI18n({
   messages
 });
@@ -29,7 +29,7 @@ const loanStore = useLoanStore();
 locale.value = userStore.user!.language;
 
 const form = reactive({
-  transactionTimestramp: dateToString(new Date()),
+  transactionTimestramp: datetimeToString(new Date()),
   description: '',
   amount: 0,
 })
@@ -86,33 +86,33 @@ function closePopup() {
 
 <template>
   <main>
-    <TheHeaderEdit :closeText="t('are-you-sure')">{{ t('add-manual-interest')}}</TheHeaderEdit>
+    <TheHeaderEdit :closeText="t('are-you-sure')">{{ t('add-manual-interest') }}</TheHeaderEdit>
     <ScrollArea>
       <ContentContainer>
         <VeeForm @submit="submitPayment">
-          <h2>{{t('info-about-new-transaction')}}</h2>
+          <h2>{{ t('info-about-new-transaction') }}</h2>
           <AppFormField name="transaction-timestamp" :label="t('transaction-timestamp')"
             v-model="form.transactionTimestramp" type="datetime-local" rules="required" />
           <AppFormField name="description" :label="t('description')" v-model="form.description" type="text"
             rules="required" />
           <AppFormField name="amount" :label="t('amount')" v-model.number="form.amount" type="number"
             rules="required" />
-          <AppButton type="submit">{{t('add-manual-interest')}}</AppButton>
+          <AppButton type="submit">{{ t('add-manual-interest') }}</AppButton>
         </VeeForm>
       </ContentContainer>
     </ScrollArea>
     <AppPopup :isOpen="popupState.isDisplayed">
       <div v-show="popupState.isLoading">
         <AppLoading />
-        <h1 style="text-align: center;">{{t('adding-interest-to-loan')}}...</h1>
+        <h1 style="text-align: center;">{{ t('adding-interest-to-loan') }}...</h1>
       </div>
       <div v-if="popupState.isSuccess">
-        <h1 style="text-align: center;">{{t('manual-interest-added')}}</h1>
-        <AppButton style="margin-top:20px;" @click="backToLoan">{{t('open-loan')}}</AppButton>
+        <h1 style="text-align: center;">{{ t('manual-interest-added') }}</h1>
+        <AppButton style="margin-top:20px;" @click="backToLoan">{{ t('open-loan') }}</AppButton>
       </div>
       <div v-if="popupState.isError">
-        <h1 style="text-align: center;">{{popupState.errorMessage}}</h1>
-        <AppButton styleType="empty" style="margin-top:20px;" @click="closePopup">{{t('try-again')}}</AppButton>
+        <h1 style="text-align: center;">{{ popupState.errorMessage }}</h1>
+        <AppButton styleType="empty" style="margin-top:20px;" @click="closePopup">{{ t('try-again') }}</AppButton>
       </div>
     </AppPopup>
   </main>

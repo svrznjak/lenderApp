@@ -11,7 +11,7 @@ import router from '@/router';
 import messages from './BudgetWithdrawFundsView.i18n.json';
 import { useI18n } from 'vue-i18n';
 import { useBudgetStore } from '@/stores/budget';
-import dateToString from '@/helpers/dateToString';
+import { datetimeToString } from '@/helpers/dateToString';
 const { t, locale } = useI18n({
   messages
 });
@@ -26,7 +26,7 @@ const budgetStore = useBudgetStore();
 locale.value = userStore.user!.language;
 
 const form = reactive({
-  transactionTimestramp: dateToString(new Date()),
+  transactionTimestramp: datetimeToString(new Date()),
   description: '',
   amount: NaN,
 })
@@ -79,32 +79,32 @@ function closePopup() {
 
 <template>
   <main>
-    <TheHeaderEdit :closeText="t('are-you-sure')">{{ t('withdrawing-funds-to-budget')}}</TheHeaderEdit>
+    <TheHeaderEdit :closeText="t('are-you-sure')">{{ t('withdrawing-funds-to-budget') }}</TheHeaderEdit>
     <ContentContainer>
       <VeeForm @submit="submitBudget">
-        <h2>{{t('info-about-new-transaction')}}</h2>
+        <h2>{{ t('info-about-new-transaction') }}</h2>
         <AppFormField name="transaction-timestamp" :label="t('transaction-timestamp')"
           v-model="form.transactionTimestramp" type="datetime-local" rules="required" />
         <AppFormField as="textarea" name="description" :label="t('description')" v-model="form.description" type="text"
           rules="required" />
         <AppFormField name="amount" :label="t('amount')" v-model.number="form.amount" type="number" min="0"
-          :rules="'required|min_value:0|max_value:'+budgetStore.budgets[props.id].calculatedTotalAvailableAmount" />
-        <AppButton type="submit">{{t('withdraw-funds')}}</AppButton>
+          :rules="'required|min_value:0|max_value:' + budgetStore.budgets[props.id].calculatedTotalAvailableAmount" />
+        <AppButton type="submit">{{ t('withdraw-funds') }}</AppButton>
       </VeeForm>
 
     </ContentContainer>
     <AppPopup :isOpen="popupState.isDisplayed">
       <div v-show="popupState.isLoading">
         <AppLoading />
-        <h1 style="text-align: center;">{{t('withdrawing-funds-from-budget')}}...</h1>
+        <h1 style="text-align: center;">{{ t('withdrawing-funds-from-budget') }}...</h1>
       </div>
       <div v-if="popupState.isSuccess">
-        <h1 style="text-align: center;">{{t('funds-withdrawn')}}</h1>
-        <AppButton style="margin-top:20px;" @click="backToBudget">{{t('open-budget')}}</AppButton>
+        <h1 style="text-align: center;">{{ t('funds-withdrawn') }}</h1>
+        <AppButton style="margin-top:20px;" @click="backToBudget">{{ t('open-budget') }}</AppButton>
       </div>
       <div v-if="popupState.isError">
-        <h1 style="text-align: center;">{{popupState.errorMessage}}</h1>
-        <AppButton styleType="empty" style="margin-top:20px;" @click="closePopup">{{t('try-again')}}</AppButton>
+        <h1 style="text-align: center;">{{ popupState.errorMessage }}</h1>
+        <AppButton styleType="empty" style="margin-top:20px;" @click="closePopup">{{ t('try-again') }}</AppButton>
       </div>
     </AppPopup>
   </main>
