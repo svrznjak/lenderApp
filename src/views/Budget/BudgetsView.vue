@@ -91,6 +91,12 @@ const filteredBudgets = computed(() => {
             </h3>
           </div>
           <div style="margin-top: 10px; display: flex">
+            <h4 style="padding: 3px 5px 0px 0px">{{ t("lended") }}:</h4>
+            <h3>
+              <AppCurrencyNumber :amount="-1" :currency="user!.currency" :locale="user!.language" />
+            </h3>
+          </div>
+          <div style="margin-top: 10px; display: flex">
             <h4 style="padding: 3px 5px 0px 0px">{{ t("avaiable") }}:</h4>
             <h3>
               <AppCurrencyNumber :amount="budget.calculatedTotalAvailableAmount" :currency="user!.currency"
