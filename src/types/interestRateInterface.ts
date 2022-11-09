@@ -6,3 +6,10 @@ export interface IInterestRate {
   isCompounding: boolean;
   entryTimestamp: number;
 }
+export interface IAmortizationInterval {
+  fromDateTimestamp: number;
+  toDateTimestamp: number;
+  outstandingPrincipal: number;
+  interest: number;
+  principalPayment: number;
+}
