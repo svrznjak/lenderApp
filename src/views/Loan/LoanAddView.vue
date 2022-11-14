@@ -9,10 +9,11 @@ import AppButton from '@/components/AppButton.vue';
 import AppPopup from '@/components/AppPopup.vue';
 import AppCard from '@/components/AppCard.vue';
 import AppCurrencyNumber from '@/components/AppCurrencyNumber.vue';
+import AppDate from '@/components/AppDate.vue';
 import AppLoading from '@/components/AppLoading.vue';
 import router from '@/router';
 import ScrollArea from '../parts/ScrollArea.vue';
-import { dateToString, datetimeToString } from '@/helpers/dateToString.js';
+import { dateToString } from '@/helpers/dateToString.js';
 
 import messages from './LoanAddView.i18n.json';
 import { useI18n } from 'vue-i18n';
@@ -312,9 +313,11 @@ const computedAmortization = computed(() => {
           </AppFormField>
           <AppFormField name="loan-duration" :label="t('loan-duration')" v-if="form.loanDurationType !== 'PICK_DATE'"
             v-model.number="form.loanDuration" type="number" min="0" rules="required|min_value:0|max_value:1000000" />
-          <AppInfoBadge v-if="form.loanDurationType !== 'PICK_DATE'">{{ t('loan-will-end-on') + form.closesDate }}
+          <AppInfoBadge v-if="form.loanDurationType !== 'PICK_DATE'">{{ t('loan-ends-on') }}:
+            <AppDate :timestamp="new Date(form.closesDate + 'T00:00').getTime()" :currency="userStore.user!.currency"
+              :locale="userStore.user!.language" />
           </AppInfoBadge>
-          <AppFormField v-if="form.loanDurationType === 'PICK_DATE'" name="closes-date" :label="t('loan-end-date')"
+          <AppFormField v-if="form.loanDurationType === 'PICK_DATE'" name="closes-date" :label="t('loan-ends-on')"
             v-model="form.closesDate" type="date" rules="required" />
           <h2>{{ t('select-funds-for-this-loan') }}</h2>
 
@@ -335,7 +338,9 @@ const computedAmortization = computed(() => {
               </h3>
             </div>
           </AppCard>
-          <AppInfoBadge v-if="form.funds.length > 0">{{ t('total-loan-amount') + formTotalFunds }}
+          <AppInfoBadge v-if="form.funds.length > 0">{{ t('total-loan-amount') }}:
+            <AppCurrencyNumber :amount="formTotalFunds" :currency="userStore.user!.currency"
+              :locale="userStore.user!.language" />
           </AppInfoBadge>
           <AppButton styleType="empty" @click.prevent="openSelectFundsPopup">{{ t('select-funds-from-budget') }}
           </AppButton>
@@ -372,7 +377,9 @@ const computedAmortization = computed(() => {
             <option value="YEARLY">{{ t('yearly') }}</option>
             <option value="ONE_TIME">{{ t('one-time') }}</option>
           </AppFormField>
-          <AppInfoBadge v-if="form.funds.length > 0">{{ t('calculated-interest') + computedAmortization.totalInterest }}
+          <AppInfoBadge v-if="form.funds.length > 0">{{ t('calculated-interest') }}:
+            <AppCurrencyNumber :amount="computedAmortization.totalInterest" :currency="userStore.user!.currency"
+              :locale="userStore.user!.language" />
           </AppInfoBadge>
           <AppButton type="submit">{{ t('create-new-loan') }}</AppButton>
         </VeeForm>

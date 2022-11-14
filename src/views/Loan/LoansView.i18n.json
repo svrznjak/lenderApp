@@ -1,10 +1,20 @@
 {
   "sl":{
     "loans": "Posojila",
-    "new-loan": "Novo posojilo"
+    "new-loan": "Novo posojilo",
+    "loan-amount": "Znesek posojila",
+    "paid-principal": "Plačana glavnica",
+    "paid-interest": "Plačane obresti",
+    "remaining-principal": "Preostala glavnica",
+    "due-date": "Predviden datum vračila"
   },
   "en":{
     "loans": "Loans",
-    "new-loan": "New loan"
+    "new-loan": "New loan",
+    "loan-amount": "Loan amount",
+    "paid-principal": "Paid principal",
+    "paid-interest": "Paid interest",
+    "remaining-principal": "Remaining principal",
+    "due-date": "Expected due date"
   }
 }

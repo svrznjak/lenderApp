@@ -1,32 +1,17 @@
 {
   "sl":{
-    "are-you-sure": "Ste prepričani, da želite prekiniti ustvarjanje novega proračuna?",
-    "creating-new-budget": "Ustvarjanje novega proračuna"
+    "add-manual-interest": "Vnos ročnih obresti",
+    "info-about-manual-interest-or-fee": "Informacije o obrestih",
+    "transaction-timestamp": "Datum in čas obresti",
+    "description": "Opis",
+    "amount": "Znesek",
+    "add-new-manual-interest": "Potrdi vnos ročnih obresti",
+    "adding-interest-to-loan": "Dodajanje ročnih obresti",
+    "manual-interest-added": "Ročne obresti so bile uspešno dodane!",
+    "open-loan": "Odpri posojilo",
+    "are-you-sure": "Ste prepričani, da želite prekiniti vnos ročnih obresti?",
+    "manual-interest-creation-failed": "Zaradi neznane napake ni bilo mogoče dodati obresti."
   },
   "en":{
-    "are-you-sure": "Are you sure that you want to cancel creating new budget?",
-    "creating-new-budget": "Creating new budget",
-    "info-about-new-budget": "Info about new budget",
-    "name": "Name",
-    "description": "Description",
-    "define-default-interest-rate": "Define default interest rate",
-    "type-of-interest-rate": "Type of interest rate",
-    "percentage-per-duration": "Percentage per duration",
-    "fixed-per-duration": "Fixed per duration",
-    "fixed-amount": "Fixed amount",
-    "percentage": "Percentage",
-    "duration": "Duration",
-    "day": "Day",
-    "week": "Week",
-    "month": "Month",
-    "year": "Year",
-    "full-duration": "Full duration",
-    "set-initial-funds-for-this-budget": "Set initial funds for this budget",
-    "initial-funds": "Initial funds",
-    "create-new-budget": "Create new budget",
-    "budget-created": "Budget created!",
-    "open-budget": "Open budget",
-    "budget-creation-failed" : "Failed to create budget. Reason is unknown.",
-    "try-again": "Try again"
   }
 }

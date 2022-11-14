@@ -79,7 +79,7 @@ async function submitPayment() {
     console.log(err);
     popupState.isLoading = false;
     popupState.isError = true;
-    popupState.errorMessage = t("loan-creation-failed");
+    popupState.errorMessage = t("failed-to-add-payment");
 
   }
 }
@@ -90,6 +90,7 @@ function backToLoan() {
 
 function closePopup() {
   popupState.isDisplayed = false;
+  popupState.showBudgetSelect = false;
   popupState.isLoading = false;
   popupState.isSuccess = false;
   popupState.isError = false;
@@ -104,15 +105,15 @@ function closePopup() {
     <ScrollArea>
       <ContentContainer>
         <VeeForm @submit="submitPayment">
-          <h2>{{ t('info-about-new-transaction') }}</h2>
+          <h2>{{ t('info-about-new-payment') }}</h2>
           <AppFormField name="transaction-timestamp" :label="t('transaction-timestamp')"
             v-model="form.transactionTimestramp" type="datetime-local" rules="required" />
           <AppFormField as="textarea" name="description" :label="t('description')" v-model="form.description"
             type="text" rules="required" />
-          <AppButton v-show="form.selectedBudgetId.length === 0" @click.prevent="openSelectBudget">
+          <p>{{ t('budget-to-pay-to') }}</p>
+          <AppButton v-show="form.selectedBudgetId.length === 0" styleType="empty" @click.prevent="openSelectBudget">
             {{ t('select-budget') }}
           </AppButton>
-          <p>{{ t('budget-to-pay-to') }}</p>
           <AppCard v-if="form.selectedBudgetId.length !== 0">
             <h2>{{ budgetStore.budgets[form.selectedBudgetId].name }}</h2>
           </AppCard>
@@ -121,7 +122,7 @@ function closePopup() {
           </AppButton>
           <AppFormField name="amount" :label="t('amount')" v-model.number="form.amount" type="number"
             rules="required" />
-          <AppButton type="submit">{{ t('add-funds') }}</AppButton>
+          <AppButton type="submit">{{ t('add-new-payment') }}</AppButton>
         </VeeForm>
       </ContentContainer>
     </ScrollArea>
@@ -136,7 +137,7 @@ function closePopup() {
               :key="budget._id">
               <h2>{{ budget.name }}</h2>
               <div style="margin-top:10px; display:flex;">
-                <h4 style="padding: 3px 5px 0px 0px;">Avaiable:</h4>
+                <h4 style="padding: 3px 5px 0px 0px;">{{ t('current-funds') }}:</h4>
                 <h3>
                   <AppCurrencyNumber :amount="budget.calculatedTotalAvailableAmount"
                     :currency="userStore.user!.currency" :locale="userStore.user!.language" />
@@ -147,16 +148,22 @@ function closePopup() {
         </ScrollArea>
       </div>
       <div v-show="popupState.isLoading">
-        <AppLoading />
-        <h1 style="text-align: center;">{{ t('adding-funds-to-budget') }}...</h1>
+        <ContentContainer>
+          <AppLoading />
+          <h1 style="text-align: center;">{{ t('adding-payment-to-loan') }}...</h1>
+        </ContentContainer>
       </div>
       <div v-if="popupState.isSuccess">
-        <h1 style="text-align: center;">{{ t('funds-added') }}</h1>
-        <AppButton style="margin-top:20px;" @click="backToLoan">{{ t('open-loan') }}</AppButton>
+        <ContentContainer>
+          <h1 style="text-align: center;">{{ t('payment-added') }}</h1>
+          <AppButton @click="backToLoan">{{ t('open-loan') }}</AppButton>
+        </ContentContainer>
       </div>
       <div v-if="popupState.isError">
-        <h1 style="text-align: center;">{{ popupState.errorMessage }}</h1>
-        <AppButton styleType="empty" style="margin-top:20px;" @click="closePopup">{{ t('try-again') }}</AppButton>
+        <ContentContainer>
+          <h1 style="text-align: center;">{{ popupState.errorMessage }}</h1>
+          <AppButton styleType="empty" @click="closePopup">{{ t('try-again') }}</AppButton>
+        </ContentContainer>
       </div>
     </AppPopup>
   </main>

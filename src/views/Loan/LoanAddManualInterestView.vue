@@ -90,14 +90,14 @@ function closePopup() {
     <ScrollArea>
       <ContentContainer>
         <VeeForm @submit="submitPayment">
-          <h2>{{ t('info-about-new-transaction') }}</h2>
+          <h2>{{ t('info-about-manual-interest-or-fee') }}</h2>
           <AppFormField name="transaction-timestamp" :label="t('transaction-timestamp')"
             v-model="form.transactionTimestramp" type="datetime-local" rules="required" />
           <AppFormField name="description" :label="t('description')" v-model="form.description" type="text"
             rules="required" />
           <AppFormField name="amount" :label="t('amount')" v-model.number="form.amount" type="number"
             rules="required" />
-          <AppButton type="submit">{{ t('add-manual-interest') }}</AppButton>
+          <AppButton type="submit">{{ t('add-new-manual-interest') }}</AppButton>
         </VeeForm>
       </ContentContainer>
     </ScrollArea>

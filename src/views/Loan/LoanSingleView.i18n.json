@@ -1,10 +1,16 @@
 {
   "sl":{
-    "budgets": "Proračuni",
-    "new-budget": "Nov proračun"
+    "info": "Informacije",
+    "transactions": "Transakcije",
+    "edit-loan": "Uredi podatke o posojilu",
+    "add-loan-payment": "Vnos plačila",
+    "add-manual-interest": "Ročni vnos obresti ali provizije"
   },
   "en":{
-    "budgets": "Budgets",
-    "new-budget": "New budget"
+    "info": "Information",
+    "transactions": "Transactions",
+    "edit-loan": "Edit loan information",
+    "add-loan-payment": "Add loan payment",
+    "add-manual-interest": "Add manual interest or fee"
   }
 }

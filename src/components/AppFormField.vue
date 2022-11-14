@@ -27,7 +27,7 @@ defineProps({
 
 <template>
   <div style="margin-bottom:20px;">
-    <label :for="name">{{label}}</label>
+    <label :for="name">{{ label }}:</label>
     <VeeErrorMessage :name="name" class="input-error" />
     <VeeField class="field" v-if="$attrs.as !== 'select'" :name="name" :label="label" :modelValue="modelValue"
       @input="$emit('modelUpdate', $event)" :id="name" v-bind="$attrs" />
