@@ -9,12 +9,10 @@ import AppOptionsSelectPopup from './AppOptionsSelectPopup.vue';
 import messages from './AppTransactionCart.i18n.json';
 import router from '@/router';
 import { useTransactionStore } from '@/stores/transaction';
-const { t, locale } = useI18n({
+const { t } = useI18n({
   messages
 });
-const userStore = useUserStore();
 const transactionStore = useTransactionStore();
-locale.value = userStore.user!.language;
 const props = defineProps({
   transactionId: {
     type: String,
@@ -55,7 +53,6 @@ const props = defineProps({
     required: true
   }
 })
-locale.value = props.locale;
 
 const date = computed(() => new Date(props.dateTimestamp).toLocaleString([], { year: 'numeric', month: 'numeric', day: 'numeric', hour: '2-digit', minute: '2-digit' }));
 
@@ -89,7 +86,7 @@ async function popupEvent(eventName: string) {
         <div class="date-and-amount-section">
           <div class="date">
             <img style="width: 15px; margin-right: 5px;" :src="calendarIcon" alt=">" />
-            <h5>{{date}}</h5>
+            <h5>{{ date }}</h5>
           </div>
           <div class="amount">
             <h2>
@@ -98,15 +95,15 @@ async function popupEvent(eventName: string) {
             </h2>
           </div>
         </div>
-        <h2>{{props.description}}</h2>
-        <h4 v-if="props.additionalDescription">{{props.additionalDescription}}</h4>
+        <h2>{{ props.description }}</h2>
+        <h4 v-if="props.additionalDescription">{{ props.additionalDescription }}</h4>
       </div>
     </AppCard>
 
     <AppOptionsSelectPopup :isDisplayed="isPopupDisplayed" :options="[
-    {text: t('edit-transaction'), eventName: 'editTransaction'},
-    {text: t('delete-transaction'), eventName: 'deleteTransaction'},
-    ]" @event="(name)=>popupEvent(name)" @close="()=>isPopupDisplayed = false" />
+      { text: t('edit-transaction'), eventName: 'editTransaction' },
+      { text: t('delete-transaction'), eventName: 'deleteTransaction' },
+    ]" @event="(name) => popupEvent(name)" @close="() => isPopupDisplayed = false" />
   </div>
 </template>
 

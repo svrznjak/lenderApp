@@ -16,7 +16,7 @@ import ScrollArea from '../parts/ScrollArea.vue';
 import { useBudgetStore } from '@/stores/budget';
 import { useLoanStore } from '@/stores/loan';
 import { datetimeToString } from '@/helpers/dateToString';
-const { t, locale } = useI18n({
+const { t } = useI18n({
   messages
 });
 const props = defineProps({
@@ -28,7 +28,6 @@ const props = defineProps({
 const userStore = useUserStore();
 const budgetStore = useBudgetStore();
 const loanStore = useLoanStore();
-locale.value = userStore.user!.language;
 
 onMounted(async () => {
   await budgetStore.syncBudgets();

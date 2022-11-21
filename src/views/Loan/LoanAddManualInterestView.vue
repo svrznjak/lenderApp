@@ -1,21 +1,18 @@
 <script setup lang="ts">
 import TheHeaderEdit from '@/views/parts/TheHeaderEdit.vue';
-import { useUserStore } from '@/stores/user';
 import ContentContainer from '../parts/ContentContainer.vue';
-import { onMounted, reactive, ref } from 'vue';
+import { reactive } from 'vue';
 import AppFormField from '@/components/AppFormField.vue';
 import AppButton from '@/components/AppButton.vue';
 import AppPopup from '@/components/AppPopup.vue';
 import AppLoading from '@/components/AppLoading.vue';
-import AppCurrencyNumber from '@/components/AppCurrencyNumber.vue';
 import router from '@/router';
 import messages from './LoanAddManualInterestView.i18n.json';
 import { useI18n } from 'vue-i18n';
 import ScrollArea from '../parts/ScrollArea.vue';
-import { useBudgetStore } from '@/stores/budget';
 import { useLoanStore } from '@/stores/loan';
 import { datetimeToString } from '@/helpers/dateToString';
-const { t, locale } = useI18n({
+const { t } = useI18n({
   messages
 });
 const props = defineProps({
@@ -24,9 +21,7 @@ const props = defineProps({
     required: true,
   },
 });
-const userStore = useUserStore();
 const loanStore = useLoanStore();
-locale.value = userStore.user!.language;
 
 const form = reactive({
   transactionTimestramp: datetimeToString(new Date()),

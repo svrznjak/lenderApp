@@ -11,17 +11,13 @@ import router from '@/router';
 import messages from './BudgetAddView.i18n.json';
 import { useI18n } from 'vue-i18n';
 import ScrollArea from '../parts/ScrollArea.vue';
-import { setLocale } from "@vee-validate/i18n";
 import { useBudgetStore } from '@/stores/budget';
 import { IInterestRate } from '@/types/interestRateInterface';
 import { IBudget } from '@/types/budgetInterface';
-const { t, locale } = useI18n({
+const { t } = useI18n({
   messages
 });
-const userStore = useUserStore();
 const budgetStore = useBudgetStore();
-locale.value = userStore.user!.language;
-setLocale(userStore.user!.language);
 
 const form = reactive({
   name: '',
@@ -97,25 +93,25 @@ function closePopup() {
 
 <template>
   <main>
-    <TheHeaderEdit :closeText="t('are-you-sure')">{{ t('creating-new-budget')}}</TheHeaderEdit>
+    <TheHeaderEdit :closeText="t('are-you-sure')">{{ t('creating-new-budget') }}</TheHeaderEdit>
     <ScrollArea>
       <ContentContainer>
         <VeeForm @submit="submitBudget">
-          <h2>{{t('info-about-new-budget')}}</h2>
+          <h2>{{ t('info-about-new-budget') }}</h2>
           <AppFormField name="name" :label="t('name')" v-model="form.name" type="text" rules="required" />
           <AppFormField as="textarea" name="description" :label="t('description')" v-model="form.description"
             type="text" rules="required" />
-          <h2>{{t('define-default-interest-rate')}}</h2>
+          <h2>{{ t('define-default-interest-rate') }}</h2>
           <AppFormField as="select" name="typeOfInterestRate" :label="t('type-of-interest-rate')"
             v-model="form.typeOfInterestRate" rules="required">
-            <option value="PERCENTAGE_PER_DURATION">{{ t('percentage-per-duration')}}</option>
+            <option value="PERCENTAGE_PER_DURATION">{{ t('percentage-per-duration') }}</option>
             <option value="FIXED_PER_DURATION">{{ t('fixed-per-duration') }}</option>
           </AppFormField>
           <AppFormField name="percentage" :label="t('percentage')"
-            v-if="form.typeOfInterestRate==='PERCENTAGE_PER_DURATION'" v-model.number="form.percentage" type="number"
+            v-if="form.typeOfInterestRate === 'PERCENTAGE_PER_DURATION'" v-model.number="form.percentage" type="number"
             rules="required|min_value:0|max_value:1000000" />
           <AppFormField name="fixed-amount" :label="t('fixed-amount')"
-            v-if="form.typeOfInterestRate==='FIXED_PER_DURATION'" v-model.number="form.fixedAmount" type="number"
+            v-if="form.typeOfInterestRate === 'FIXED_PER_DURATION'" v-model.number="form.fixedAmount" type="number"
             rules="required|min_value:0|max_value:999999999" />
           <AppFormField as="select" name="duration" :label="t('duration')" v-model="form.duration" rules="required">
             <option value="DAY">{{ t('day') }}</option>
@@ -129,10 +125,10 @@ function closePopup() {
             <option value="YES">{{ t('yes') }}</option>
             <option value="NO">{{ t('no') }}</option>
           </AppFormField>
-          <h2>{{t('set-initial-funds-for-this-budget')}}</h2>
+          <h2>{{ t('set-initial-funds-for-this-budget') }}</h2>
           <AppFormField name="initial-funds" :label="t('initial-funds')" v-model.number="form.initialFunds"
             type="number" rules="required" />
-          <AppButton type="submit">{{t('create-new-budget')}}</AppButton>
+          <AppButton type="submit">{{ t('create-new-budget') }}</AppButton>
         </VeeForm>
 
       </ContentContainer>
@@ -140,15 +136,15 @@ function closePopup() {
     <AppPopup :isOpen="popupState.isDisplayed">
       <div v-show="popupState.isLoading">
         <AppLoading />
-        <h1 style="text-align: center;">{{t('creating-new-budget')}}...</h1>
+        <h1 style="text-align: center;">{{ t('creating-new-budget') }}...</h1>
       </div>
       <div v-if="popupState.isSuccess">
-        <h1 style="text-align: center;">{{t('budget-created')}}</h1>
-        <AppButton style="margin-top:20px;" @click="openNewBudget">{{t('open-budget')}}</AppButton>
+        <h1 style="text-align: center;">{{ t('budget-created') }}</h1>
+        <AppButton style="margin-top:20px;" @click="openNewBudget">{{ t('open-budget') }}</AppButton>
       </div>
       <div v-if="popupState.isError">
-        <h1 style="text-align: center;">{{popupState.errorMessage}}</h1>
-        <AppButton styleType="empty" style="margin-top:20px;" @click="closePopup">{{t('try-again')}}</AppButton>
+        <h1 style="text-align: center;">{{ popupState.errorMessage }}</h1>
+        <AppButton styleType="empty" style="margin-top:20px;" @click="closePopup">{{ t('try-again') }}</AppButton>
       </div>
     </AppPopup>
   </main>

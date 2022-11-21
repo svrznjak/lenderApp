@@ -2,17 +2,14 @@
 import closeIcon from '@/assets/icons/close.svg';
 import router from '@/router';
 import AppPopup from '@/components/AppPopup.vue';
-import { onUnmounted, reactive } from 'vue';
+import { reactive } from 'vue';
 import AppButton from '@/components/AppButton.vue';
 import ContentContainer from '../parts/ContentContainer.vue';
 import messages from './TheHeaderEdit.i18n.json';
 import { useI18n } from 'vue-i18n';
-import { useUserStore } from '@/stores/user';
-const { t, locale } = useI18n({
+const { t } = useI18n({
   messages
 });
-const userStore = useUserStore();
-locale.value = userStore.user!.language;
 
 defineProps({
   closeText: {
@@ -43,9 +40,9 @@ function closeView() {
 <template>
   <AppPopup :isOpen="popupState.isDisplayed">
     <ContentContainer>
-      <h1 style="text-align: center;">{{closeText}}</h1>
-      <AppButton @click="closeView">{{t('yes')}}</AppButton>
-      <AppButton @click="closeClosePopup" styleType="empty">{{t('no')}}</AppButton>
+      <h1 style="text-align: center;">{{ closeText }}</h1>
+      <AppButton @click="closeView">{{ t('yes') }}</AppButton>
+      <AppButton @click="closeClosePopup" styleType="empty">{{ t('no') }}</AppButton>
     </ContentContainer>
   </AppPopup>
 

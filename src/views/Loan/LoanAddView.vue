@@ -24,7 +24,7 @@ import { useBudgetStore } from '@/stores/budget';
 import { IInterestRate, IAmortizationInterval } from '@/types/interestRateInterface';
 import { IBudget } from '@/types/budgetInterface';
 import calculateExpectedAmortization from '@/helpers/calculateExpectedAmortization';
-const { t, locale } = useI18n({
+const { t } = useI18n({
   messages
 });
 const userStore = useUserStore();

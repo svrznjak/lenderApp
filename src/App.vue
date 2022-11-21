@@ -1,11 +1,27 @@
 <script setup lang="ts">
-import { TransitionProps } from 'vue';
+import { Transition } from 'vue';
+import { useI18n } from 'vue-i18n';
+import { setLocale } from "@vee-validate/i18n";
+import { useUserStore } from '@/stores/user';
+
+const { locale } = useI18n();
+const userStore = useUserStore();
+
+function setLang() {
+  console.log("🔥", "set lang");
+  if (userStore.user !== undefined) {
+    // userStore.user.language = "en";
+    locale.value = userStore.user.language;
+    setLocale(userStore.user.language);
+  }
+
+}
 
 
 </script>
 
 <template>
-  <router-view v-slot="{ Component, route }">
+  <router-view @vnode-before-mount="setLang" @vnode-updated="setLang" v-slot="{ Component, route }">
     <!-- Use any custom transition and fallback to `fade` -->
     <Transition :name="route.meta.transition as string || 'fade'">
       <component :is="Component" />

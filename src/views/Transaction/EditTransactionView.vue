@@ -13,7 +13,7 @@ import { useI18n } from 'vue-i18n';
 import ScrollArea from '../parts/ScrollArea.vue';
 import { useTransactionStore } from '@/stores/transaction';
 import { datetimeToString } from '@/helpers/dateToString';
-const { t, locale } = useI18n({
+const { t } = useI18n({
   messages
 });
 const props = defineProps({
@@ -22,9 +22,6 @@ const props = defineProps({
     required: true,
   },
 });
-const userStore = useUserStore();
-locale.value = userStore.user!.language;
-
 
 const { getTransaction, updateTransaction } = useTransactionStore();
 

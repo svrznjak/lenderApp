@@ -13,13 +13,11 @@ import ScrollArea from '../parts/ScrollArea.vue';
 import { useTransactionStore } from '@/stores/transaction';
 import TransactionsList from '../parts/TransactionsList.vue';
 import { useBudgetStore } from '@/stores/budget';
-const { t, locale } = useI18n({
+const { t } = useI18n({
   messages
 });
-const userStore = useUserStore();
 const budgetStore = useBudgetStore();
 const transactionStore = useTransactionStore();
-locale.value = userStore.user!.language;
 const props = defineProps({
   id: {
     type: String,
@@ -141,34 +139,34 @@ function closePopup() {
           <AppButton class="custom-button" @click="setDisplayedScreen('budget-info')"
             style="width:50%; margin:0; border-radius: 5px 0 0 5px;" :styleType="budgetInfoButtonStyle"
             :disabled="displayedScreen === 'budget-info'">
-            {{t('info')}}</AppButton>
+            {{ t('info') }}</AppButton>
           <AppButton class="custom-button" @click="setDisplayedScreen('budget-transactions')"
             style="width:50%; margin:0; border-radius: 0 5px 5px 0;" :styleType="budgetTransactionsButtonStyle"
             :disabled="displayedScreen === 'budget-transactions'">
-            {{t('transactions')}}
+            {{ t('transactions') }}
           </AppButton>
         </div>
-        <div id="budget-info" class="local-container" v-show="displayedScreen==='budget-info'">
+        <div id="budget-info" class="local-container" v-show="displayedScreen === 'budget-info'">
           <ContentContainer>
-            <p>{{budgetStore.budgets[props.id].description}}</p>
+            <p>{{ budgetStore.budgets[props.id].description }}</p>
 
-            <AppButton @click="router.push({name: 'budgetEdit', params:{id: props.id}})" styleType="empty">
-              {{t('edit-budget')}}</AppButton>
+            <AppButton @click="router.push({ name: 'budgetEdit', params: { id: props.id } })" styleType="empty">
+              {{ t('edit-budget') }}</AppButton>
             <AppButton v-if="!budgetStore.budgets[props.id].isArchived" @click="openArchivePromptPopup"
               styleType="clean">
-              {{t('archive-budget')}}</AppButton>
+              {{ t('archive-budget') }}</AppButton>
             <AppButton v-else-if="budgetStore.budgets[props.id].isArchived" @click="openUnarchivePromptPopup"
               styleType="clean">
-              {{t('unarchive-budget')}}</AppButton>
+              {{ t('unarchive-budget') }}</AppButton>
           </ContentContainer>
 
         </div>
-        <div id="budget-transaction" class="local-container" v-if="displayedScreen==='budget-transactions'">
-          <AppButton @click="router.push({name: 'budgetAddFunds', params:{id: props.id}})">
-            {{t('add-funds-to-budget')}}</AppButton>
+        <div id="budget-transaction" class="local-container" v-if="displayedScreen === 'budget-transactions'">
+          <AppButton @click="router.push({ name: 'budgetAddFunds', params: { id: props.id } })">
+            {{ t('add-funds-to-budget') }}</AppButton>
           <AppButton v-if="budgetStore.budgets[props.id].calculatedTotalAvailableAmount > 0"
-            @click="router.push({name: 'budgetWithdrawFunds', params:{id: props.id}})">
-            {{t('withdraw-funds-from-budget')}}</AppButton>
+            @click="router.push({ name: 'budgetWithdrawFunds', params: { id: props.id } })">
+            {{ t('withdraw-funds-from-budget') }}</AppButton>
           <TransactionsList displayAs="budget-transactions" />
         </div>
       </ContentContainer>
@@ -182,34 +180,34 @@ function closePopup() {
       </div>
       <div v-if="popupState.isArchivePrompt">
         <ContentContainer>
-          <h1 style="text-align: center;">{{t('are-you-sure-you-want-to-archive-this-budget')}}</h1>
-          <AppButton @click="archiveBudget">{{t('yes')}}</AppButton>
-          <AppButton @click="closePopup">{{t('no')}}</AppButton>
+          <h1 style="text-align: center;">{{ t('are-you-sure-you-want-to-archive-this-budget') }}</h1>
+          <AppButton @click="archiveBudget">{{ t('yes') }}</AppButton>
+          <AppButton @click="closePopup">{{ t('no') }}</AppButton>
         </ContentContainer>
       </div>
       <div v-if="popupState.isUnarchivePrompt">
         <ContentContainer>
-          <h1 style="text-align: center;">{{t('are-you-sure-you-want-to-unarchive-this-budget')}}</h1>
-          <AppButton @click="unarchiveBudget">{{t('yes')}}</AppButton>
-          <AppButton @click="closePopup">{{t('no')}}</AppButton>
+          <h1 style="text-align: center;">{{ t('are-you-sure-you-want-to-unarchive-this-budget') }}</h1>
+          <AppButton @click="unarchiveBudget">{{ t('yes') }}</AppButton>
+          <AppButton @click="closePopup">{{ t('no') }}</AppButton>
         </ContentContainer>
       </div>
       <div v-if="popupState.isArchivedSuccess">
         <ContentContainer>
-          <h1 style="text-align: center;">{{t('budget-has-been-archived')}}</h1>
-          <AppButton @click="closePopup">{{t('i-understand')}}</AppButton>
+          <h1 style="text-align: center;">{{ t('budget-has-been-archived') }}</h1>
+          <AppButton @click="closePopup">{{ t('i-understand') }}</AppButton>
         </ContentContainer>
       </div>
       <div v-if="popupState.isUnarchivedSuccess">
         <ContentContainer>
-          <h1 style="text-align: center;">{{t('budget-has-been-unarchived')}}</h1>
-          <AppButton @click="closePopup">{{t('i-understand')}}</AppButton>
+          <h1 style="text-align: center;">{{ t('budget-has-been-unarchived') }}</h1>
+          <AppButton @click="closePopup">{{ t('i-understand') }}</AppButton>
         </ContentContainer>
       </div>
       <div v-if="popupState.isError">
         <ContentContainer>
-          <h1 style="text-align: center;">{{popupState.errorMessage}}</h1>
-          <AppButton styleType="empty" @click="closePopup">{{t('try-again')}}</AppButton>
+          <h1 style="text-align: center;">{{ popupState.errorMessage }}</h1>
+          <AppButton styleType="empty" @click="closePopup">{{ t('try-again') }}</AppButton>
         </ContentContainer>
       </div>
     </AppPopup>

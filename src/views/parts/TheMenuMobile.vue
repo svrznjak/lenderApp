@@ -9,12 +9,11 @@ import AppButton from '@/components/AppButton.vue';
 import { useI18n } from 'vue-i18n';
 import { useUserStore } from "@/stores/user";
 import messages from './TheMenuMobile.i18n.json';
-const { t, locale } = useI18n({
+const { t } = useI18n({
   messages
 });
 
 const userStore = useUserStore()
-locale.value = userStore.user!.language;
 
 const props = defineProps({
   newButtonText: {
@@ -68,9 +67,9 @@ function openNew() {
         alt="Open menu" /></div>
   </div>
   <div id="drawer-bottom-menu" :class="{ open: isMenuOpen }">
-    <AppButton class="custom-button" :class="currentRouteName===routeName? 'active' : 'inactive'"
-      :disabled="currentRouteName===routeName" v-for="{id, text, routeName} in menuLinks" :key="id"
-      @click="() => router.push({ name: routeName})">{{text}}</AppButton>
+    <AppButton class="custom-button" :class="currentRouteName === routeName ? 'active' : 'inactive'"
+      :disabled="currentRouteName === routeName" v-for="{ id, text, routeName } in menuLinks" :key="id"
+      @click="() => router.push({ name: routeName })">{{ text }}</AppButton>
   </div>
 </template>
 

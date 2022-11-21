@@ -12,7 +12,7 @@ import messages from './BudgetWithdrawFundsView.i18n.json';
 import { useI18n } from 'vue-i18n';
 import { useBudgetStore } from '@/stores/budget';
 import { datetimeToString } from '@/helpers/dateToString';
-const { t, locale } = useI18n({
+const { t } = useI18n({
   messages
 });
 const props = defineProps({
@@ -21,9 +21,7 @@ const props = defineProps({
     required: true,
   },
 });
-const userStore = useUserStore();
 const budgetStore = useBudgetStore();
-locale.value = userStore.user!.language;
 
 const form = reactive({
   transactionTimestramp: datetimeToString(new Date()),

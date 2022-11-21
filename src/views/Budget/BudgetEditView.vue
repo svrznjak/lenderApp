@@ -21,13 +21,10 @@ const props = defineProps({
     required: true,
   },
 });
-const { t, locale } = useI18n({
+const { t } = useI18n({
   messages,
 });
-const userStore = useUserStore();
 const budgetStore = useBudgetStore();
-locale.value = userStore.user!.language;
-setLocale(userStore.user!.language);
 
 const form = reactive({
   name: budgetStore.budgets[props.id].name,
@@ -101,7 +98,7 @@ function closePopup() {
 <template>
   <main>
     <TheHeaderEdit :closeText="t('are-you-sure')">{{
-    t("editing-budget")
+        t("editing-budget")
     }}</TheHeaderEdit>
     <ScrollArea>
       <ContentContainer>
@@ -150,7 +147,7 @@ function closePopup() {
       <div v-if="popupState.isSuccess">
         <h1 style="text-align: center">{{ t("budget-saved") }}</h1>
         <AppButton style="margin-top: 20px" @click="openNewBudget">{{
-        t("open-budget")
+            t("open-budget")
         }}</AppButton>
       </div>
       <div v-if="popupState.isError">
