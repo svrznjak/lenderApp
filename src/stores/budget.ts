@@ -1,4 +1,5 @@
 import { IBudget, IBudgetsAssociative } from "./../types/budgetInterface";
+import { IInterestRate } from "@/types/interestRateInterface";
 import { acceptHMRUpdate, defineStore } from "pinia";
 import { gql } from "graphql-request";
 import _ from "lodash";
@@ -381,6 +382,36 @@ export const useBudgetStore = defineStore("BudgetStore", {
       console.log(updatedBudget);
       this.budgets[updatedBudget._id] = updatedBudget;
       return updatedBudget;
+    },
+    async getCalculatedAtTimestamp({
+      budgetIds,
+      timestamp,
+    }: {
+      budgetIds: string[];
+      timestamp: number;
+    }): Promise<IBudget[]> {
+      const variables = {
+        budgetIds,
+        timestamp,
+      };
+
+      const query = gql`
+        query ($budgetIds: [ID!], $timestamp: Float!) {
+          Budget {
+            calculatedValuesAtTimestamp(budgetIds: $budgetIds, timestamp: $timestamp) {
+              _id
+              calculatedTotalInvestedAmount
+              calculatedTotalWithdrawnAmount
+              calculatedTotalAvailableAmount
+            }
+          }
+        }
+      `;
+      const calculatedValues = (await requestBackend({ gql: query, variables })).Budget.calculatedValuesAtTimestamp;
+      // TODO check if response is valid
+      return calculatedValues.map((calculatedValue: any) => {
+        return { ...this.budgets[calculatedValue._id], ...calculatedValue };
+      });
     },
     getBudgetById(budgetId: string) {
       return this.budgets[budgetId];
