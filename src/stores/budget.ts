@@ -1,15 +1,10 @@
-import { IBudget } from "./../types/budgetInterface";
+import { IBudget, IBudgetsAssociative } from "./../types/budgetInterface";
 import { acceptHMRUpdate, defineStore } from "pinia";
 import { gql } from "graphql-request";
 import requestBackend from "./helpers/requestBackend";
-import { IInterestRate } from "@/types/interestRateInterface";
-
-interface IBudgets {
-  [key: string]: IBudget;
-}
 
 export const useBudgetStore = defineStore("BudgetStore", {
-  state: () => ({ budgets: {} as IBudgets, isFetching: false as boolean }),
+  state: () => ({ budgets: {} as IBudgetsAssociative, isFetching: false as boolean }),
   actions: {
     async syncBudget(variables: { budgetId: string }) {
       const query = gql`

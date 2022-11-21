@@ -11,3 +11,7 @@ export interface IBudget {
   calculatedTotalAvailableAmount: number;
   isArchived: boolean;
 }
+
+export interface IBudgetsAssociative {
+  [key: string]: IBudget;
+}
