@@ -389,22 +389,19 @@ export const useBudgetStore = defineStore("BudgetStore", {
     getBudgetById(budgetId: string) {
       return this.budgets[budgetId];
     },
-    getArchivedBudgets(): IBudget[] {
-      console.log(
-        Object.entries(this.budgets)
-          .map((entry) => entry[1])
-          .find((budget) => budget.isArchived)
-      );
-      const archivedBudgets = Object.entries(this.budgets)
-        .map((entry) => entry[1])
-        .filter((budget) => budget.isArchived);
+    getArchivedBudgets(): IBudgetsAssociative {
+      const archivedBudgets = _.cloneDeep(this.budgets);
+      for (const budgetId in archivedBudgets) {
+        if (!archivedBudgets[budgetId].isArchived) delete archivedBudgets[budgetId];
+      }
       return archivedBudgets;
     },
-    getUnarchivedBudgets(): IBudget[] {
-      const archivedBudgets = Object.entries(this.budgets)
-        .map((entry) => entry[1])
-        .filter((budget) => !budget.isArchived);
-      return archivedBudgets;
+    getUnarchivedBudgets(): IBudgetsAssociative {
+      const unarchivedBudgets = _.cloneDeep(this.budgets);
+      for (const budgetId in unarchivedBudgets) {
+        if (!unarchivedBudgets[budgetId].isArchived) delete unarchivedBudgets[budgetId];
+      }
+      return unarchivedBudgets;
     },
   },
   getters: {},
