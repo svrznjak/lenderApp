@@ -399,7 +399,7 @@ export const useBudgetStore = defineStore("BudgetStore", {
     getUnarchivedBudgets(): IBudgetsAssociative {
       const unarchivedBudgets = _.cloneDeep(this.budgets);
       for (const budgetId in unarchivedBudgets) {
-        if (!unarchivedBudgets[budgetId].isArchived) delete unarchivedBudgets[budgetId];
+        if (unarchivedBudgets[budgetId].isArchived) delete unarchivedBudgets[budgetId];
       }
       return unarchivedBudgets;
     },
