@@ -1,6 +1,7 @@
 import { IBudget, IBudgetsAssociative } from "./../types/budgetInterface";
 import { acceptHMRUpdate, defineStore } from "pinia";
 import { gql } from "graphql-request";
+import _ from "lodash";
 import requestBackend from "./helpers/requestBackend";
 
 export const useBudgetStore = defineStore("BudgetStore", {
