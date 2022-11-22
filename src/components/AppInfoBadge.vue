@@ -30,7 +30,7 @@ const props = defineProps({
 }
 
 .full-width {
-  width: 100%;
+  width: calc(100% - 20px);
 }
 
 .blue {
@@ -41,5 +41,10 @@ const props = defineProps({
 .yellow {
   background-color: #FF8A1E;
   color: #FFFFFF;
+}
+
+.red {
+  background-color: #cf3434;
+  color: #ffffff;
 }
 </style>

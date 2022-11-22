@@ -30,6 +30,7 @@ const props = defineProps({
   background-color: #ffffff;
   border-radius: 5px;
   cursor: pointer;
+  box-shadow: 3px 3px 20px #00000008;
 }
 
 .card.disabled {
