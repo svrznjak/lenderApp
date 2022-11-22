@@ -313,7 +313,7 @@ const computedAmortization = computed(() => {
           </AppFormField>
           <AppFormField name="loan-duration" :label="t('loan-duration')" v-if="form.loanDurationType !== 'PICK_DATE'"
             v-model.number="form.loanDuration" type="number" min="0" rules="required|min_value:0|max_value:1000000" />
-          <AppInfoBadge v-if="form.loanDurationType !== 'PICK_DATE'">{{ t('loan-ends-on') }}:
+          <AppInfoBadge :is-full-width="true" v-if="form.loanDurationType !== 'PICK_DATE'">{{ t('loan-ends-on') }}:
             <AppDate :timestamp="new Date(form.closesDate + 'T00:00').getTime()" :currency="userStore.user!.currency"
               :locale="userStore.user!.language" />
           </AppInfoBadge>
@@ -338,7 +338,7 @@ const computedAmortization = computed(() => {
               </h3>
             </div>
           </AppCard>
-          <AppInfoBadge v-if="form.funds.length > 0">{{ t('total-loan-amount') }}:
+          <AppInfoBadge :is-full-width="true" v-if="form.funds.length > 0">{{ t('total-loan-amount') }}:
             <AppCurrencyNumber :amount="formTotalFunds" :currency="userStore.user!.currency"
               :locale="userStore.user!.language" />
           </AppInfoBadge>
@@ -377,7 +377,7 @@ const computedAmortization = computed(() => {
             <option value="YEARLY">{{ t('yearly') }}</option>
             <option value="ONE_TIME">{{ t('one-time') }}</option>
           </AppFormField>
-          <AppInfoBadge v-if="form.funds.length > 0">{{ t('calculated-interest') }}:
+          <AppInfoBadge :is-full-width="true" v-if="form.funds.length > 0">{{ t('calculated-interest') }}:
             <AppCurrencyNumber :amount="computedAmortization.totalInterest" :currency="userStore.user!.currency"
               :locale="userStore.user!.language" />
           </AppInfoBadge>
