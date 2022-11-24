@@ -84,7 +84,7 @@ async function popupEvent(eventName: string) {
     <AppCard :has-arrow="false" @click="openPopup">
       <div class="app-transaction-card-container">
         <div class="date-and-amount-section">
-          <div class="date">
+          <div v-if="props.dateTimestamp > -1" class="date">
             <img style="width: 15px; margin-right: 5px;" :src="calendarIcon" alt=">" />
             <h5>{{ date }}</h5>
           </div>
