@@ -38,7 +38,6 @@ const popupState = reactive({
 });
 
 async function submitBudget() {
-  console.log(form);
   popupState.isDisplayed = true;
   popupState.isLoading = true;
   try {

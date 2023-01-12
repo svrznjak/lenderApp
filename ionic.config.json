@@ -1,0 +1,7 @@
+{
+  "name": "lenderapp",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "custom"
+}

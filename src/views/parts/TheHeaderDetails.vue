@@ -4,7 +4,7 @@ import backIcon from '@/assets/icons/back.svg'
 
 <template>
   <div id="header-details">
-    <img :src="backIcon" alt="+" style="margin-right: 20px;" />
+    <img :src="backIcon" alt="+" style="height: 22px; width: 22px; margin-right: 20px; filter: brightness(100);" />
     <h1>
       <slot></slot>
     </h1>
@@ -13,8 +13,9 @@ import backIcon from '@/assets/icons/back.svg'
 
 <style scoped>
 #header-details {
-  padding: 40px 20px;
-  border-bottom: 2px solid var(--borderColor);
+  padding: 60px 30px 25px 30px;
+  background-color: var(--primaryColor);
+  color: #fff;
   display: flex;
   cursor: pointer;
 }

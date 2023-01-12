@@ -19,19 +19,17 @@ defineEmits<{
 </script>
 
 <template>
-  <Teleport to="body">
-    <Transition name="fade">
-      <div id="background-dim" @click="$emit('close')" v-show="isOpen"></div>
-    </Transition>
-    <Transition name="slide">
-      <div id="overlay" v-show="isOpen">
-        <div v-if="hasCloseButton" @click="$emit('close')" style="position: absolute; top: 20px;right: 20px;">
-          <img style="width: 20px; right: 50px;" :src="closeIcon" alt=">" />
-        </div>
-        <slot></slot>
+  <Transition name="fade">
+    <div id="background-dim" @click="$emit('close')" v-show="isOpen"></div>
+  </Transition>
+  <Transition name="slide">
+    <div id="overlay" v-show="isOpen">
+      <div v-if="hasCloseButton" @click="$emit('close')" style="position: absolute; top: 20px;right: 20px;">
+        <img style="width: 20px; right: 50px;" :src="closeIcon" alt=">" />
       </div>
-    </Transition>
-  </Teleport>
+      <slot></slot>
+    </div>
+  </Transition>
 </template>
 
 <style scoped>
@@ -45,7 +43,7 @@ defineEmits<{
   transform: translateX(-50%);
   width: 90%;
   max-width: 500px;
-  border-radius: 5px 5px 0 0;
+  border-radius: 3px 3px 0 0;
   box-shadow: 0px 0px 40px rgba(0, 0, 0, 0.15);
   background-color: var(--backgroundColor);
 

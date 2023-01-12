@@ -4,6 +4,7 @@ import * as path from "path";
 import postcssNested from "postcss-nesting";
 // https://vitejs.dev/config/
 export default defineConfig({
+  base: "/",
   plugins: [vue()],
   css: {
     postcss: {

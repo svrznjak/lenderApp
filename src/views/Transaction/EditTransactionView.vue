@@ -48,11 +48,9 @@ const popupState = reactive({
 });
 
 async function submitUpdate() {
-  console.log(form);
   popupState.isDisplayed = true;
   popupState.isLoading = true;
   try {
-    console.log(router.currentRoute.value.params.id);
     const data = {
       transactionId: props.id,
       transactionTimestamp: new Date(form.transactionTimestramp).getTime(),

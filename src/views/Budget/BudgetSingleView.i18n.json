@@ -2,6 +2,16 @@
   "sl":{
     "info": "Informacije",
     "transactions": "Transakcije",
+    "edit-budget": "Uredi proračun",
+    "archive-budget": "Arhiviraj proračun",
+    "are-you-sure-you-want-to-archive-this-budget": "Ste preričani, da želite arhivirati ta proračun?",
+    "unarchive-budget": "Vrni proračun med aktivne proračune",
+    "are-you-sure-you-want-to-unarchive-this-budget": "Ste preričani, da želite te proračun vrniti med aktivne proračune?",
+    "yes": "Da",
+    "no": "Ne",
+    "budget-has-been-archived": "Proračun je bil uspešno arhiviran!",
+    "budget-has-been-unarchived": "Proračun je bil uspešno vrnjen med aktivne proračune!",
+    "i-understand": "Razumem",
     "add-funds-to-budget": "Položi sredstva na proračun",
     "withdraw-funds-from-budget": "Dvigni sredstva iz proračuna"
   },

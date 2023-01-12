@@ -59,7 +59,6 @@ function selectBudget(budgetId: string): void {
 }
 
 async function submitPayment() {
-  console.log(form);
   popupState.isDisplayed = true;
   popupState.isLoading = true;
   try {

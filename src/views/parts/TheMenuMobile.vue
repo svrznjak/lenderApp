@@ -42,7 +42,6 @@ const menuLinks: MenuLink[] = [{
 
 const isMenuOpen = ref(false);
 function toggleMenu() {
-  console.log(!isMenuOpen.value)
   isMenuOpen.value = !isMenuOpen.value;
 }
 

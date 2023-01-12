@@ -42,7 +42,6 @@ function openSelectBudget() {
 }
 
 async function submitPayment() {
-  console.log(form);
   popupState.isDisplayed = true;
   popupState.isLoading = true;
   try {

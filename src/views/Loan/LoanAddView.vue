@@ -4,6 +4,7 @@ import TheHeaderEdit from '@/views/parts/TheHeaderEdit.vue';
 import { useUserStore } from '@/stores/user';
 import ContentContainer from '../parts/ContentContainer.vue';
 import { computed, onMounted, reactive, ref, watch } from 'vue';
+import { computedAsync } from '@vueuse/core'
 import AppFormField from '@/components/AppFormField.vue';
 import AppButton from '@/components/AppButton.vue';
 import AppPopup from '@/components/AppPopup.vue';
@@ -22,11 +23,13 @@ import IFund from '@/types/fundInterface';
 import { useLoanStore } from '@/stores/loan';
 import { useBudgetStore } from '@/stores/budget';
 import { IInterestRate, IAmortizationInterval } from '@/types/interestRateInterface';
-import { IBudget } from '@/types/budgetInterface';
+import { IBudget, IBudgetsAssociative } from '@/types/budgetInterface';
 import calculateExpectedAmortization from '@/helpers/calculateExpectedAmortization';
+
 const { t } = useI18n({
   messages
 });
+
 const userStore = useUserStore();
 const loanStore = useLoanStore();
 const budgetStore = useBudgetStore();
@@ -34,10 +37,6 @@ const budgetStore = useBudgetStore();
 onMounted(async () => {
   await budgetStore.syncBudgets();
 });
-
-locale.value = userStore.user!.language;
-
-
 
 const form = reactive({
   name: '',
@@ -54,6 +53,17 @@ const form = reactive({
   expectedPayments: 'MONTHLY',
   funds: [] as IFund[]
 });
+
+const budgetsWithAvaiableFundsAtOpenedDate = computedAsync(async () => {
+  const AVAIABLE_BUDGETS_IDS = Object.keys(budgetStore.getUnarchivedBudgets());
+
+  const CALCULATED_BUDGETS: IBudget[] = await budgetStore.getCalculatedAtTimestamp({ budgetIds: AVAIABLE_BUDGETS_IDS, timestamp: new Date(form.openedDate + 'T00:00').getTime() });
+  let budgetsAsAssociative: IBudgetsAssociative = {};
+  CALCULATED_BUDGETS.forEach((budget) => {
+    budgetsAsAssociative[budget._id] = budget;
+  });
+  return budgetsAsAssociative;
+}, {});
 
 const addFundsForm = reactive({
   newFundsAmount: 0,
@@ -143,7 +153,7 @@ const popupState = reactive({
 const searchFieldText = ref('');
 
 const filteredBudgets = computed(() => {
-  let budgets: IBudget[] = Object.entries(budgetStore.budgets).map(
+  let budgets: IBudget[] = Object.entries(budgetsWithAvaiableFundsAtOpenedDate.value).map(
     (entry) => entry[1]
   );
 
@@ -260,6 +270,7 @@ function removeFund() {
   });
 }
 
+
 const computedAmortization = computed(() => {
   console.log("recalc");
   let interestAmount = 0;
@@ -322,7 +333,7 @@ const computedAmortization = computed(() => {
           <h2>{{ t('select-funds-for-this-loan') }}</h2>
 
           <AppCard v-for="fund in form.funds" :key="fund.budgetId" @click="openfundOptions(fund.budgetId)">
-            <h2>{{ budgetStore.budgets[fund.budgetId].name }}</h2>
+            <h2>{{ budgetsWithAvaiableFundsAtOpenedDate[fund.budgetId].name }}</h2>
             <div style="margin-top:10px; display:flex;">
               <h4 style="padding: 3px 5px 0px 0px;">{{ t('selected-funds') }}</h4>
               <h3>
@@ -333,10 +344,16 @@ const computedAmortization = computed(() => {
             <div style="margin-top:10px; display:flex;">
               <h4 style="padding: 3px 5px 0px 0px;">{{ t('avaiable-funds') }}</h4>
               <h3>
-                <AppCurrencyNumber :amount="budgetStore.budgets[fund.budgetId].calculatedTotalAvailableAmount"
+                <AppCurrencyNumber
+                  :amount="budgetsWithAvaiableFundsAtOpenedDate[fund.budgetId].calculatedTotalAvailableAmount"
                   :currency="userStore.user!.currency" :locale="userStore.user!.language" />
               </h3>
             </div>
+            <AppInfoBadge style="margin-top:10px;" color="red"
+              v-if="budgetsWithAvaiableFundsAtOpenedDate[fund.budgetId].calculatedTotalAvailableAmount < fund.amount">{{
+    t('insufficient-funds')
+}}
+            </AppInfoBadge>
           </AppCard>
           <AppInfoBadge :is-full-width="true" v-if="form.funds.length > 0">{{ t('total-loan-amount') }}:
             <AppCurrencyNumber :amount="formTotalFunds" :currency="userStore.user!.currency"
@@ -420,11 +437,12 @@ const computedAmortization = computed(() => {
       <div v-if="popupState.isEnterFunds" style="width:100%;">
         <ContentContainer>
           <AppCard @click="() => { popupState.isSelectBudget = true; popupState.isEnterFunds = false; }">
-            <h2>{{ budgetStore.budgets[pickedBudgetId].name }}</h2>
+            <h2>{{ budgetsWithAvaiableFundsAtOpenedDate[pickedBudgetId].name }}</h2>
             <div style="margin-top:10px; display:flex;">
               <h4 style="padding: 3px 5px 0px 0px;">{{ t('avaiable-funds') }}</h4>
               <h3>
-                <AppCurrencyNumber :amount="budgetStore.budgets[pickedBudgetId].calculatedTotalAvailableAmount"
+                <AppCurrencyNumber
+                  :amount="budgetsWithAvaiableFundsAtOpenedDate[pickedBudgetId].calculatedTotalAvailableAmount"
                   :currency="userStore.user!.currency" :locale="userStore.user!.language" />
               </h3>
             </div>
@@ -432,8 +450,9 @@ const computedAmortization = computed(() => {
           <h1>{{ t('enter-amount') }}</h1>
           <VeeForm @submit="addFund">
             <AppFormField name="newFundsAmount" :label="t('funds-amount')" v-model.number="addFundsForm.newFundsAmount"
-              type="number" :min="0" :max="budgetStore.budgets[pickedBudgetId].calculatedTotalAvailableAmount"
-              :rules="'required|min_value:0|max_value:' + budgetStore.budgets[pickedBudgetId].calculatedTotalAvailableAmount" />
+              type="number" :min="0"
+              :max="budgetsWithAvaiableFundsAtOpenedDate[pickedBudgetId].calculatedTotalAvailableAmount"
+              :rules="'required|min_value:0|max_value:' + budgetsWithAvaiableFundsAtOpenedDate[pickedBudgetId].calculatedTotalAvailableAmount" />
             <AppButton type="submit">{{ t('confirm') }}
             </AppButton>
           </VeeForm>

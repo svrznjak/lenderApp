@@ -13,6 +13,7 @@ import ScrollArea from './parts/ScrollArea.vue';
 import router from '@/router';
 import { useI18n } from 'vue-i18n';
 import messages from './LoginView.i18n.json';
+import { Toast } from '@capacitor/toast';
 const { t, locale } = useI18n({
   messages
 });
@@ -37,7 +38,6 @@ async function login() {
 
   try {
     const result = await userStore.loginWithEmailAndPassword(form.email, form.password);
-    console.log(result);
     await userStore.getUserData();
     locale.value = userStore.user!.language;
     isLoading.value = false;
@@ -68,39 +68,46 @@ function enterApp() {
   else router.push({ name: 'budgets' });
 }
 
+async function testActionSheet() {
+  await Toast.show({
+    text: 'Hello!',
+  });
+}
+
 </script>
 
 <template>
   <main>
     <AppPopup :isOpen="showPopup">
       <ContentContainer>
-        <div v-show=" isLoading">
+        <div v-show="isLoading">
           <AppLoading />
-          <h1 style="text-align: center;">{{t('logging-in')}}</h1>
+          <h1 style="text-align: center;">{{ t('logging-in') }}</h1>
         </div>
         <div v-if="isSuccess">
-          <h1 style="text-align: center;">{{t('welcome-back')}}, {{userName}}!</h1>
-          <AppButton style="margin-top:20px;" @click="enterApp">{{t('open-app')}}</AppButton>
+          <h1 style="text-align: center;">{{ t('welcome-back') }}, {{ userName }}!</h1>
+          <AppButton style="margin-top:20px;" @click="enterApp">{{ t('open-app') }}</AppButton>
         </div>
         <div v-if="loginError">
-          <h1 style="text-align: center;">{{loginError}}</h1>
-          <AppButton styleType="empty" style="margin-top:20px;" @click="closePopup">{{t('try-again')}}</AppButton>
+          <h1 style="text-align: center;">{{ loginError }}</h1>
+          <AppButton styleType="empty" style="margin-top:20px;" @click="closePopup">{{ t('try-again') }}</AppButton>
         </div>
       </ContentContainer>
     </AppPopup>
     <ScrollArea>
       <ContentContainer>
-        <TheHeaderMain style="text-align:center; margin-bottom: 40px;">{{t('login')}}</TheHeaderMain>
+        <TheHeaderMain style="text-align:center; margin-bottom: 40px;">{{ t('login') }}</TheHeaderMain>
+        <AppButton type="button" @click="testActionSheet">{{ t('testActionSheet') }}</AppButton>
         <VeeForm @submit="login">
-          <AppFormField name="email" :label="t('e-mail')" v-model="form.email" type="e-mail" autocomplete="e-mail"
+          <AppFormField name="email" :label="t('e-mail')" v-model="form.email" type="email" autocomplete="e-mail"
             rules="required|email" />
           <AppFormField name="password" :label="t('password')" v-model="form.password" type="password"
             autocomplete="password" rules="required" />
-          <AppButton type="submit">{{t('login')}}</AppButton>
+          <AppButton type="submit">{{ t('login') }}</AppButton>
 
         </VeeForm>
-        <AppButton @click="router.push({name: 'Register'})" styleType="empty">
-          {{t('create-account')}}</AppButton>
+        <AppButton @click="router.push({ name: 'Register' })" styleType="empty">
+          {{ t('create-account') }}</AppButton>
       </ContentContainer>
     </ScrollArea>
   </main>

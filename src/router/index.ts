@@ -14,14 +14,13 @@ import { useUserStore } from "@/stores/user";
 const router = createRouter({
   history: createWebHistory(),
   routes: [
-    { path: "", redirect: "/login" },
+    { path: "/", redirect: "/web/login" },
     {
       path: "/login",
       name: "login",
       component: LoginView,
       beforeEnter: (to, from, next) => {
         const userStore = useUserStore();
-        console.log(userStore.user);
         if (userStore.user !== undefined) {
           next({
             name: "budgets",
@@ -156,34 +155,33 @@ const router = createRouter({
 router.beforeEach(async (to, from) => {
   const userStore = useUserStore();
   to.meta.transition = generateTransitionName(from, to);
-  console.log(userStore.user);
   if (to.meta.requiresAuth && userStore.user === undefined) {
     return { name: "login", query: { redirectTo: to.path } };
   }
 });
 
 function generateTransitionName(from: RouteLocationNormalized, to: RouteLocationNormalized) {
-  console.log(from);
-  console.log(to);
+  // console.log(from);
+  // console.log(to);
   if (from.name === "budgets" && to.name === "budget") return "slide-left";
-  if (from.name === "budget" && to.name === "budgets") return "slide-right";
-  if (from.name === "budgets" && to.name === "budgetAdd") return "slide-up";
-  if (from.name === "budgetAdd" && to.name === "budgets") return "slide-down";
-  if (from.name === "budget" && to.name === "budgetEdit") return "slide-up";
-  if (from.name === "budgetEdit" && to.name === "budget") return "slide-down";
-  if (from.name === "budget" && to.name === "budgetAddFunds") return "slide-up";
-  if (from.name === "budgetAddFunds" && to.name === "budget") return "slide-down";
-  if (from.name === "budget" && to.name === "budgetWithdrawFunds") return "slide-up";
-  if (from.name === "budgetWithdrawFunds" && to.name === "budget") return "slide-down";
-  if (from.name === "loans" && to.name === "loanAdd") return "slide-up";
-  if (from.name === "loanAdd" && to.name === "loans") return "slide-down";
-  if (from.name === "loans" && to.name === "loan") return "slide-left";
-  if (from.name === "loan" && to.name === "loans") return "slide-right";
-  if (from.name === "loan" && to.name === "loanAddPayment") return "slide-up";
-  if (from.name === "loanAddPayment" && to.name === "loan") return "slide-down";
-  if (from.name === "loan" && to.name === "loanAddManualInterest") return "slide-up";
-  if (from.name === "loanAddManualInterest" && to.name === "loan") return "slide-down";
-  return "fade";
+  else if (from.name === "budget" && to.name === "budgets") return "slide-right";
+  else if (from.name === "budgets" && to.name === "budgetAdd") return "slide-up";
+  else if (from.name === "budgetAdd" && to.name === "budgets") return "slide-down";
+  else if (from.name === "budget" && to.name === "budgetEdit") return "slide-up";
+  else if (from.name === "budgetEdit" && to.name === "budget") return "slide-down";
+  else if (from.name === "budget" && to.name === "budgetAddFunds") return "slide-up";
+  else if (from.name === "budgetAddFunds" && to.name === "budget") return "slide-down";
+  else if (from.name === "budget" && to.name === "budgetWithdrawFunds") return "slide-up";
+  else if (from.name === "budgetWithdrawFunds" && to.name === "budget") return "slide-down";
+  else if (from.name === "loans" && to.name === "loanAdd") return "slide-up";
+  else if (from.name === "loanAdd" && to.name === "loans") return "slide-down";
+  else if (from.name === "loans" && to.name === "loan") return "slide-left";
+  else if (from.name === "loan" && to.name === "loans") return "slide-right";
+  else if (from.name === "loan" && to.name === "loanAddPayment") return "slide-up";
+  else if (from.name === "loanAddPayment" && to.name === "loan") return "slide-down";
+  else if (from.name === "loan" && to.name === "loanAddManualInterest") return "slide-up";
+  else if (from.name === "loanAddManualInterest" && to.name === "loan") return "slide-down";
+  else return "fade";
 }
 
 export default router;

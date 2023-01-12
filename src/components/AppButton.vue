@@ -27,12 +27,13 @@ button {
 
 button.regular,
 button.empty {
-  border-radius: 5px;
-  font-weight: 700;
+  border-radius: 3px;
+  font-weight: 600;
   font-size: 16px;
   line-height: 100%;
   transition: all 0.2s;
-  border: 2px solid var(--primaryColor);
+  border: 1px solid var(--primaryColor);
+  background-color: #fff;
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 
   &:active {

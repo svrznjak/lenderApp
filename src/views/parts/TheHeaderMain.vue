@@ -12,9 +12,10 @@
 
 <style scoped>
 #header-main {
-  padding: 40px 20px;
+  padding: 60px 30px 25px 30px;
   z-index: 100;
-  background-color: var(--backgroundColor);
-  border-bottom: 2px solid var(--borderColor);
+  background-color: var(--primaryColor);
+  color: #fff;
+  width: 102%;
 }
 </style>

@@ -137,11 +137,11 @@ function closePopup() {
       <ContentContainer v-if="budgetStore.budgets[props.id] !== undefined">
         <div>
           <AppButton class="custom-button" @click="setDisplayedScreen('budget-info')"
-            style="width:50%; margin:0; border-radius: 5px 0 0 5px;" :styleType="budgetInfoButtonStyle"
+            style="width:50%; margin:0; border-radius: 3px 0 0 3px;" :styleType="budgetInfoButtonStyle"
             :disabled="displayedScreen === 'budget-info'">
             {{ t('info') }}</AppButton>
           <AppButton class="custom-button" @click="setDisplayedScreen('budget-transactions')"
-            style="width:50%; margin:0; border-radius: 0 5px 5px 0;" :styleType="budgetTransactionsButtonStyle"
+            style="width:50%; margin:0; border-radius: 0 3px 3px 0;" :styleType="budgetTransactionsButtonStyle"
             :disabled="displayedScreen === 'budget-transactions'">
             {{ t('transactions') }}
           </AppButton>
@@ -182,14 +182,14 @@ function closePopup() {
         <ContentContainer>
           <h1 style="text-align: center;">{{ t('are-you-sure-you-want-to-archive-this-budget') }}</h1>
           <AppButton @click="archiveBudget">{{ t('yes') }}</AppButton>
-          <AppButton @click="closePopup">{{ t('no') }}</AppButton>
+          <AppButton style-type="empty" @click="closePopup">{{ t('no') }}</AppButton>
         </ContentContainer>
       </div>
       <div v-if="popupState.isUnarchivePrompt">
         <ContentContainer>
           <h1 style="text-align: center;">{{ t('are-you-sure-you-want-to-unarchive-this-budget') }}</h1>
           <AppButton @click="unarchiveBudget">{{ t('yes') }}</AppButton>
-          <AppButton @click="closePopup">{{ t('no') }}</AppButton>
+          <AppButton style-type="empty" @click="closePopup">{{ t('no') }}</AppButton>
         </ContentContainer>
       </div>
       <div v-if="popupState.isArchivedSuccess">

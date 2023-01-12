@@ -2,7 +2,7 @@
 import TheHeaderEdit from '@/views/parts/TheHeaderEdit.vue';
 import { useUserStore } from '@/stores/user';
 import ContentContainer from '../parts/ContentContainer.vue';
-import { reactive } from 'vue';
+import { onMounted, onUnmounted, reactive } from 'vue';
 import AppFormField from '@/components/AppFormField.vue';
 import AppButton from '@/components/AppButton.vue';
 import AppPopup from '@/components/AppPopup.vue';
@@ -14,9 +14,21 @@ import ScrollArea from '../parts/ScrollArea.vue';
 import { useBudgetStore } from '@/stores/budget';
 import { IInterestRate } from '@/types/interestRateInterface';
 import { IBudget } from '@/types/budgetInterface';
+import { StatusBar } from '@capacitor/status-bar';
+import { isNative } from '@/helpers/deviceInfo';
 const { t } = useI18n({
   messages
 });
+
+onMounted(async () => {
+  if (await isNative())
+    StatusBar.hide();
+})
+onUnmounted(async () => {
+  if (await isNative())
+    StatusBar.show();
+})
+
 const budgetStore = useBudgetStore();
 
 const form = reactive({
@@ -41,7 +53,6 @@ const popupState = reactive({
 let createdBudget: IBudget | null = null;
 
 async function submitBudget() {
-  console.log(form);
   popupState.isDisplayed = true;
   popupState.isLoading = true;
   try {
@@ -93,8 +104,8 @@ function closePopup() {
 
 <template>
   <main>
-    <TheHeaderEdit :closeText="t('are-you-sure')">{{ t('creating-new-budget') }}</TheHeaderEdit>
     <ScrollArea>
+      <TheHeaderEdit :closeText="t('are-you-sure')">{{ t('creating-new-budget') }}</TheHeaderEdit>
       <ContentContainer>
         <VeeForm @submit="submitBudget">
           <h2>{{ t('info-about-new-budget') }}</h2>

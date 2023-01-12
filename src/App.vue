@@ -8,7 +8,7 @@ const { locale } = useI18n();
 const userStore = useUserStore();
 
 function setLang() {
-  console.log("🔥", "set lang");
+  // console.log("🔥", "set lang");
   if (userStore.user !== undefined) {
     // userStore.user.language = "en";
     locale.value = userStore.user.language;

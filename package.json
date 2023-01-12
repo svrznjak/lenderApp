@@ -6,12 +6,24 @@
   "scripts": {
     "dev": "vite --host",
     "build": "vue-tsc --noEmit && vite build",
-    "preview": "vite preview"
+    "deploy:prod": "rsync -avz -e 'ssh -p 19193' dist/* moneylender@money-lender.app:/home/moneylender/public_html/web",
+    "preview": "vite preview",
+    "android": "npx cap sync && npx cap run android -l",
+    "ionic:build": "npm run build",
+    "ionic:serve": "npm run dev"
   },
   "dependencies": {
+    "@capacitor/action-sheet": "^4.1.0",
     "@capacitor/android": "^4.3.0",
+    "@capacitor/app": "^4.1.1",
     "@capacitor/core": "^4.3.0",
+    "@capacitor/device": "^4.1.0",
+    "@capacitor/dialog": "^4.1.0",
     "@capacitor/ios": "^4.3.0",
+    "@capacitor/splash-screen": "^4.1.2",
+    "@capacitor/status-bar": "^4.1.1",
+    "@capacitor/toast": "^4.1.0",
+    "@ionic/pwa-elements": "^3.1.1",
     "@vee-validate/i18n": "^4.6.9",
     "@vee-validate/rules": "^4.6.9",
     "@vueuse/core": "^9.5.0",

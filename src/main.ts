@@ -3,6 +3,13 @@ import { initializeApp } from "firebase/app";
 import { getAnalytics, logEvent } from "firebase/analytics";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import firebaseConfig from "@/config/firebaseConfig.js";
+
+import { isNative } from "./helpers/deviceInfo.js";
+import nativeAppBoot from "./nativeAppBoot.js";
+(async () => {
+  if (await isNative()) nativeAppBoot();
+})();
+
 // Initialize Firebase
 const firebaseApp = initializeApp(firebaseConfig);
 const analytics = getAnalytics(firebaseApp);

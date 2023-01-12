@@ -48,7 +48,6 @@ async function submitBudget() {
       description: form.description,
       amount: form.amount,
     }
-    console.log(data);
     await budgetStore.addFundsToBudget(data);
     popupState.isLoading = false;
     popupState.isSuccess = true;

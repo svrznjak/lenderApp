@@ -72,22 +72,22 @@ function setDisplayedScreen(newValue: displayedScreenType): void {
       <ContentContainer v-if="currentLoan !== undefined">
         <div>
           <AppButton class="custom-button" @click="setDisplayedScreen('loan-info')"
-            style="width:50%; margin:0; border-radius: 5px 0 0 5px;" :styleType="loanInfoButtonStyle">
-            {{t('info')}}</AppButton>
+            style="width:50%; margin:0; border-radius: 3px 0 0 3px;" :styleType="loanInfoButtonStyle">
+            {{ t('info') }}</AppButton>
           <AppButton class="custom-button" @click="setDisplayedScreen('loan-transactions')"
-            style="width:50%; margin:0; border-radius: 0 5px 5px 0;" :styleType="loanTransactionsButtonStyle">
-            {{t('transactions')}}
+            style="width:50%; margin:0; border-radius: 0 3px 3px 0;" :styleType="loanTransactionsButtonStyle">
+            {{ t('transactions') }}
           </AppButton>
         </div>
-        <div id="loan-info" class="local-container" v-show="displayedScreen==='loan-info'">
-          <p>{{currentLoan.description}}</p>
-          <AppButton styleType="empty">{{t('edit-loan')}}</AppButton>
+        <div id="loan-info" class="local-container" v-show="displayedScreen === 'loan-info'">
+          <p>{{ currentLoan.description }}</p>
+          <AppButton styleType="empty">{{ t('edit-loan') }}</AppButton>
         </div>
-        <div id="loan-transaction" class="local-container" v-if="displayedScreen==='loan-transactions'">
-          <AppButton @click="router.push({name: 'loanAddPayment', params:{id: props.id}})">
-            {{t('add-loan-payment')}}</AppButton>
-          <AppButton @click="router.push({name: 'loanAddManualInterest', params:{id: props.id}})">
-            {{t('add-manual-interest')}}</AppButton>
+        <div id="loan-transaction" class="local-container" v-if="displayedScreen === 'loan-transactions'">
+          <AppButton @click="router.push({ name: 'loanAddPayment', params: { id: props.id } })">
+            {{ t('add-loan-payment') }}</AppButton>
+          <AppButton @click="router.push({ name: 'loanAddManualInterest', params: { id: props.id } })">
+            {{ t('add-manual-interest') }}</AppButton>
           <TransactionsList displayAs="loan-transactions" />
         </div>
       </ContentContainer>

@@ -2,7 +2,7 @@
 import closeIcon from '@/assets/icons/close.svg';
 import router from '@/router';
 import AppPopup from '@/components/AppPopup.vue';
-import { reactive } from 'vue';
+import { onBeforeUnmount, reactive } from 'vue';
 import AppButton from '@/components/AppButton.vue';
 import ContentContainer from '../parts/ContentContainer.vue';
 import messages from './TheHeaderEdit.i18n.json';
@@ -17,7 +17,6 @@ defineProps({
   },
 });
 
-
 const popupState = reactive({
   isDisplayed: false,
 });
@@ -31,7 +30,8 @@ function closeClosePopup() {
 }
 
 function closeView() {
-  router.back()
+  //router.back();
+  window.history.back();
 }
 
 
@@ -48,7 +48,8 @@ function closeView() {
 
   <div id="header-edit">
     <div id="header-back-button" @click="openClosePopup">
-      <img :src="closeIcon" alt="+" style="margin-right: 28px; width: 25px; height: 25px; margin-top:1px;" />
+      <img :src="closeIcon" alt="+"
+        style="margin-right: 18px; width: 20px; height: 20px; margin-top:1px; filter: brightness(0);" />
       <h1>
         <slot></slot>
       </h1>
@@ -58,13 +59,13 @@ function closeView() {
 
 <style scoped>
 #header-edit {
-  background-color: var(--primaryColor);
-  color: #fff;
+  border-bottom: 1px solid var(--borderColor);
 }
 
 #header-back-button {
   width: fit-content;
   padding: 0px 30px;
+  padding-top: 20px;
   min-height: 107px;
   display: flex;
   cursor: pointer;

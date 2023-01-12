@@ -28,7 +28,7 @@ const props = defineProps({
   display: flex;
   padding: 30px;
   background-color: #ffffff;
-  border-radius: 5px;
+  border-radius: 3px;
   cursor: pointer;
   box-shadow: 3px 3px 20px #00000008;
 }

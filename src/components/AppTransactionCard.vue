@@ -9,9 +9,12 @@ import AppOptionsSelectPopup from './AppOptionsSelectPopup.vue';
 import messages from './AppTransactionCart.i18n.json';
 import router from '@/router';
 import { useTransactionStore } from '@/stores/transaction';
+import { ActionSheet, ActionSheetButtonStyle } from '@capacitor/action-sheet';
+
 const { t } = useI18n({
   messages
 });
+
 const transactionStore = useTransactionStore();
 const props = defineProps({
   transactionId: {
@@ -57,7 +60,7 @@ const props = defineProps({
 const date = computed(() => new Date(props.dateTimestamp).toLocaleString([], { year: 'numeric', month: 'numeric', day: 'numeric', hour: '2-digit', minute: '2-digit' }));
 
 const isPopupDisplayed = ref(false);
-function openPopup() {
+async function openPopup() {
   isPopupDisplayed.value = true;
 }
 function closePopup() {
@@ -101,9 +104,9 @@ async function popupEvent(eventName: string) {
     </AppCard>
 
     <AppOptionsSelectPopup :isDisplayed="isPopupDisplayed" :options="[
-      { text: t('edit-transaction'), eventName: 'editTransaction' },
-      { text: t('delete-transaction'), eventName: 'deleteTransaction' },
-    ]" @event="(name) => popupEvent(name)" @close="() => isPopupDisplayed = false" />
+  { text: t('edit-transaction'), eventName: 'editTransaction' },
+  { text: t('delete-transaction'), eventName: 'deleteTransaction' },
+]" @event="(name) => popupEvent(name)" @close="() => isPopupDisplayed = false" />
   </div>
 </template>
 

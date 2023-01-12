@@ -47,7 +47,6 @@ const popupState = reactive({
 let editedBudget: IBudget | null = null;
 
 async function submitBudget() {
-  console.log(form);
   popupState.isDisplayed = true;
   popupState.isLoading = true;
   try {
@@ -98,8 +97,8 @@ function closePopup() {
 <template>
   <main>
     <TheHeaderEdit :closeText="t('are-you-sure')">{{
-        t("editing-budget")
-    }}</TheHeaderEdit>
+    t("editing-budget")
+}}</TheHeaderEdit>
     <ScrollArea>
       <ContentContainer>
         <VeeForm @submit="submitBudget">
@@ -147,8 +146,8 @@ function closePopup() {
       <div v-if="popupState.isSuccess">
         <h1 style="text-align: center">{{ t("budget-saved") }}</h1>
         <AppButton style="margin-top: 20px" @click="openNewBudget">{{
-            t("open-budget")
-        }}</AppButton>
+    t("open-budget")
+}}</AppButton>
       </div>
       <div v-if="popupState.isError">
         <h1 style="text-align: center">{{ popupState.errorMessage }}</h1>

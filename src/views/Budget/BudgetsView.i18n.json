@@ -4,8 +4,9 @@
     "new-budget": "Nov proračun",
     "invested": "Položeno",
     "withdrawn": "Dvignjeno",
-    "avaiable": "Na voljo"
-
+    "avaiable": "Na voljo",
+    "search-budgets": "Išči proračun",
+    "show-archived-budgets": "Prikaži arhivirane proračune"
   },
   "en":{
     "budgets": "Budgets",
